@@ -43,10 +43,10 @@ import com.frontendart.testsuites.registration.RegistrationTest;
         ForgotPasswordTest.class, //FIREFOX OK: CENTRAL ADMIN, AUTHOR, INSTITUTIONAL ADMIN | CHROME OK: CENTRAL ADMIN, AUTHOR, INSTITUTIONAL ADMIN
         LogoutTest.class, //FIREFOX OK: CENTRAL ADMIN, INSTITUTIONAL ADMIN, AUTHOR | CHROME OK: CENTRAL ADMIN, AUTHOR, INSTITUTIONAL ADMIN
         GenerateReportTest.class, // FIREFOX OK: CENTRAL ADMIN, AUTHOR, INSTITUTIONAL ADMIN | CHROME OK: CENTRAL ADMIN, AUTHOR, INSTITUTIONAL ADMIN
-        RecordSelectionTest.class,
+        RecordSelectionTest.class, // FIREFOX, CHROME OK ALL TYPE
         SearchTest.class, // CHROME OK: INSTITUTIONAL ADMIN, CENTRAL ADMIN, AUTHOR | FIREFOX OK: AUTHOR, CENTRAL ADMIN, INSTITUTIONAL ADMIN
-        AboutTest.class,
-        MessagesTest.class,
+        AboutTest.class, // FIREFOX, CHROME OK ALL TYPE
+        MessagesTest.class,// FIREFOX, CHROME OK ALL TYPE
         UserProfileTest.class,
         ChangeUserTest.class,
         ChangeViewTest.class,

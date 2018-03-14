@@ -29,10 +29,10 @@ public class TestConfiguration {
     public static String gui2Password         = "GUI2teszt";
     public static int    defaultWaitTimeInSec = 5;
     public static int    maxWaitTimeInSec     = 30;
-    public static Roles  role                 = Roles.INSTITUTIONAL_ADMIN;
+    public static Roles  role                 = Roles.AUTHOR;
     public static String targetPC             = "http://127.0.0.1:4444/wd/hub";
 //	public static String targetPC = "http://jenkins.mt2.dsd.sztaki.hu:4444/wd/hub";
-    public static BrowserTypes browser = BrowserTypes.GOOGLECHROME;
+    public static BrowserTypes browser = BrowserTypes.FIREFOX;
 
 // java -jar "selenium-server-standalone-2.53.0.jar" -Dwebdriver.firefox.bin="/home/zalan/ff46/firefox/firefox"
 

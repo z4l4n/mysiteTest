@@ -263,10 +263,6 @@ public class GeneralTableManager {
 
         final List<String> visibleHeaders = getAllHeadersText();
 
-        System.out.println("Látható headerek");
-        for (String s : visibleHeaders) {
-            System.out.print(s + " ");
-        }
         final List<GeneralTableAttributes> notDisabledAttributes = GeneralRecordTypes.getNotDisabledAttributes(pageToValidate);
 
         for (final GeneralTableAttributes attribute : notDisabledAttributes) {

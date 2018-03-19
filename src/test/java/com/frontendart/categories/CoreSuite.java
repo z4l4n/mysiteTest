@@ -43,16 +43,16 @@ import com.frontendart.testsuites.registration.RegistrationTest;
         ForgotPasswordTest.class, //FIREFOX OK: CENTRAL ADMIN, AUTHOR, INSTITUTIONAL ADMIN | CHROME OK: CENTRAL ADMIN, AUTHOR, INSTITUTIONAL ADMIN
         LogoutTest.class, //FIREFOX OK: CENTRAL ADMIN, INSTITUTIONAL ADMIN, AUTHOR | CHROME OK: CENTRAL ADMIN, AUTHOR, INSTITUTIONAL ADMIN
         GenerateReportTest.class, // FIREFOX OK: CENTRAL ADMIN, AUTHOR, INSTITUTIONAL ADMIN | CHROME OK: CENTRAL ADMIN, AUTHOR, INSTITUTIONAL ADMIN
-        RecordSelectionTest.class, // FIREFOX, CHROME OK ALL TYPE
+        RecordSelectionTest.class, // FIREFOX, CHROME OK ALL_ROLES
         SearchTest.class, // CHROME OK: INSTITUTIONAL ADMIN, CENTRAL ADMIN, AUTHOR | FIREFOX OK: AUTHOR, CENTRAL ADMIN, INSTITUTIONAL ADMIN
-        AboutTest.class, // FIREFOX, CHROME OK ALL TYPE
-        MessagesTest.class,// FIREFOX, CHROME OK ALL TYPE
-        UserProfileTest.class,
-        ChangeUserTest.class,
-        ChangeViewTest.class,
-        FilterTest.class,
+        AboutTest.class, // FIREFOX, CHROME OK ALL_ROLES
+        MessagesTest.class,// FIREFOX, CHROME OK ALL_ROLES
+        UserProfileTest.class, // FF, CHR OK ALL_ROLES
+        ChangeUserTest.class,// FF, CHR OK ALL_ROLES
+        ChangeViewTest.class,// FF, CHR OK ALL_ROLES, contains DB writing
+        FilterTest.class, // FF, CHR OK ALL_ROLES
         LockRecordTest.class,
-        SortTest.class,
+        SortTest.class, //TODO TUDOMÁNYOS FOKOZAT RENDEZÉS BUG
         ToolbarTest.class,
         ViewVersionsTest.class,
         HelpTest.class,

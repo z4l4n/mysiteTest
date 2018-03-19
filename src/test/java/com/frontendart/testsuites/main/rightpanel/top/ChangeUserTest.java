@@ -25,67 +25,70 @@ import com.frontendart.managers.main.rightpanel.top.ChangeUserManager;
 
 /**
  * Class for about test
- * 
+ *
  * @author Zoli
  *
  */
 @Category({ RightPanelTopSuite.class, CENTRAL_ADMIN_Suite.class, INSTITUTIONAL_ADMIN_Suite.class, AUTHOR_Suite.class })
 public class ChangeUserTest extends JunitTestClass {
 
-	/**
-	 * Check basic user change
-	 */
-	@Test
-	@Category(CoreSuite.class)
-	// In the system mtmtuser3 should be named as: "MTMT2 User3" (Family Name /
-	// Given name)
-	public final void testBasicChangeUser() {
-		if (Utils.getActualRole().equals(Roles.AUTHOR)) {
-			Utils.waitForAndClickOnGeneralWebElement(MainPageLocators.MY_PROFILE_BUTTON);
-			assertFalse("There should be no opportunity to login as other user!",
-					Utils.isThisElementVisible(ChangeUserLocators.CHANGE));
-		} else {
-			// Click on change user window
-			ChangeUserManager.openChangeUserWindow();
-			Utils.defaultWait();
-			
-			// Select mtmtuser3 from selector
-			if (Utils.getActualRole().equals(Roles.CENTRAL_ADMIN)) {
-				Utils.writeTextToThisField("User Teszt", ChangeUserLocators.LOGIN_AS_WINDOW_FILTER_FIELD);
-				Utils.waitForAndClickOnGeneralWebElement(ChangeUserLocators.LOGIN_AS_WINDOW_FILTER_BUTTON);
-			}
-			Utils.defaultWait();
-			
-			//If no results, then skip the testcase
-			List<WebElement> noResults = driver
-					.findElements(By.xpath(ChangeUserLocators.LOGIN_AS_WINDOW_NO_RESULTS.toString()));
+    /**
+     * Check basic user change
+     */
+    @Test
+    @Category(CoreSuite.class)
+    // In the system mtmtuser3 should be named as: "MTMT2 User3" (Family Name /
+    // Given name)
+    public final void testBasicChangeUser() {
+        if (Utils.getActualRole().equals(Roles.AUTHOR)) {
+            Utils.waitForAndClickOnGeneralWebElement(MainPageLocators.MY_PROFILE_BUTTON);
+            assertFalse("There should be no opportunity to login as other user!",
+                    Utils.isThisElementVisible(ChangeUserLocators.CHANGE));
+        } else {
+            // Click on change user window
+            ChangeUserManager.openChangeUserWindow();
+            Utils.defaultWait();
 
-			if (noResults != null && !noResults.isEmpty()) {
-				Utils.waitForAndClickOnGeneralWebElement(ChangeUserLocators.LOGIN_AS_WINDOW_CLOSE);
-			}
+            // Select mtmtuser3 from selector
+            if (Utils.getActualRole().equals(Roles.CENTRAL_ADMIN)) {
+                Utils.writeTextToThisField("User Teszt", ChangeUserLocators.LOGIN_AS_WINDOW_FILTER_FIELD);
+                Utils.waitForAndClickOnGeneralWebElement(ChangeUserLocators.LOGIN_AS_WINDOW_FILTER_BUTTON);
+            } else {
+                Utils.writeTextToThisField("Author Bela (aux)", ChangeUserLocators.LOGIN_AS_WINDOW_FILTER_FIELD);
+                Utils.waitForAndClickOnGeneralWebElement(ChangeUserLocators.LOGIN_AS_WINDOW_FILTER_BUTTON);
+            }
+            Utils.defaultWait();
 
-			org.junit.Assume.assumeTrue(noResults.isEmpty());
+            //If no results, then skip the testcase
+            List<WebElement> noResults = driver
+                    .findElements(By.xpath(ChangeUserLocators.LOGIN_AS_WINDOW_NO_RESULTS.toString()));
 
-			Utils.waitForAndClickOnGeneralWebElement(ChangeUserLocators.LOGIN_AS_WINDOW_FIRST_MATCH);
-			Utils.waitForAndClickOnGeneralWebElement(ChangeUserLocators.LOGIN_AS_WINDOW_LOGIN);
+            if (noResults != null && !noResults.isEmpty()) {
+                Utils.waitForAndClickOnGeneralWebElement(ChangeUserLocators.LOGIN_AS_WINDOW_CLOSE);
+            }
 
-			// Validate
-			RecordSelectionManager.waitUntilTableIsReady();
-			String usernameText = Utils.createGeneralWebElementFromEnum(MainPageLocators.MY_PROFILE_BUTTON)
-					.findElement(By.xpath(".//span[contains(@class, 'x-btn-button')]")).getText();
-			if (Utils.getActualRole().equals(Roles.CENTRAL_ADMIN)) {
-				assertEquals("Username is not correct after login as user!", "user", usernameText);
-			} else {
-				assertEquals("Username is not correct after login as user!", "author", usernameText);
-			}
+            org.junit.Assume.assumeTrue(noResults.isEmpty());
 
-			// change back
-			ChangeUserManager.changeBackUser();
-			Utils.waitMillisec(100000);
-			usernameText = Utils.createGeneralWebElementFromEnum(MainPageLocators.MY_PROFILE_BUTTON)
-					.findElement(By.xpath(".//span[contains(@class, 'x-btn-button')]")).getText();
-			assertEquals("Username is not correct after switching back!", Utils.getActualRole().getUsername(),
-					usernameText);
-		}
-	}
+            Utils.waitForAndClickOnGeneralWebElement(ChangeUserLocators.LOGIN_AS_WINDOW_FIRST_MATCH);
+            Utils.waitForAndClickOnGeneralWebElement(ChangeUserLocators.LOGIN_AS_WINDOW_LOGIN);
+
+            // Validate
+            RecordSelectionManager.waitUntilTableIsReady();
+            String usernameText = Utils.createGeneralWebElementFromEnum(MainPageLocators.MY_PROFILE_BUTTON)
+                    .findElement(By.xpath(".//span[contains(@class, 'x-btn-button')]")).getText();
+            if (Utils.getActualRole().equals(Roles.CENTRAL_ADMIN)) {
+                assertEquals("Username is not correct after login as user!", "user", usernameText);
+            } else {
+                assertEquals("Username is not correct after login as user!", "author", usernameText);
+            }
+
+            // change back
+            ChangeUserManager.changeBackUser();
+            Utils.waitMillisec(10000);
+            usernameText = Utils.createGeneralWebElementFromEnum(MainPageLocators.MY_PROFILE_BUTTON)
+                    .findElement(By.xpath(".//span[contains(@class, 'x-btn-button')]")).getText();
+            assertEquals("Username is not correct after switching back!", Utils.getActualRole().getUsername(),
+                    usernameText);
+        }
+    }
 }

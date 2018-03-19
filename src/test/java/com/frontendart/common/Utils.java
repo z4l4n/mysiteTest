@@ -209,7 +209,7 @@ public class Utils extends JunitTestClass {
      */
     public static boolean waitForAndClickOnGeneralWebElement(final GeneralLocatorTypes locator) {
         waitForElementVisible(locator);
-        //waitForElementClickable(locator);
+        //waitForElementClickable(locator); // Én (Zalán) raktam vissza
 
         final WebElement myWebElement = createGeneralWebElementFromEnum(locator);
 

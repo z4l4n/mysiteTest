@@ -110,7 +110,7 @@ public class CreatePublicationManager {
 
 			// Find attribute
 			for (final GeneralTableAttributes attribute : AdditionalPublicationAttributes.values()) {
-				if (Utils.isThisStringListContainsThisAttribute(Arrays.asList(label), attribute)) {
+				if (Utils.doesThisStringListContainsThisAttribute(Arrays.asList(label), attribute)) {
 					fillThisAttribute = attribute;
 				}
 			}

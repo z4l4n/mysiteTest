@@ -159,7 +159,7 @@ public class SortTest extends JunitTestClass {
         LOGGER.info("A következő oszlop szerint szeretnénk rendezni: " + Utils.getAllMyLabelsAsString(randomLocator));
         for (final WebElement header : GeneralTableManager.getAllVisibleHeadersAsWebElements()) {
             final String label = header.findElement(By.xpath("./div/div/div/div/span")).getText();
-            if (Utils.isThisStringListContainsThisAttribute(Arrays.asList(label), randomLocator)) {
+            if (Utils.doesThisStringListContainsThisAttribute(Arrays.asList(label), randomLocator)) {
                 LOGGER.info("Kattintsunk a " + Utils.getAllMyLabelsAsString(randomLocator)
                         + " oszlop fejlécénél lévő legördülő nyílra, és válasszuk a növekvő sorrendezés opciót.");
                 header.sendKeys(Keys.DOWN);

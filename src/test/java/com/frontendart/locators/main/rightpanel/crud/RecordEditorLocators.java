@@ -130,7 +130,7 @@ public enum RecordEditorLocators implements GeneralLocatorTypes {
 
 		// Check that all not disabled locators are present
 		for (final GeneralTableAttributes locator : pageToValidate.getEnumConstants()) {
-			if ((!locator.getAttributeFlags().contains(RecordAttributeFlags.DISABLED)) && (!Utils.isThisStringListContainsThisAttribute(labelsAsString, locator))) {
+			if ((!locator.getAttributeFlags().contains(RecordAttributeFlags.DISABLED)) && (!Utils.doesThisStringListContainsThisAttribute(labelsAsString, locator))) {
 				returnValue = false;
 			}
 		}

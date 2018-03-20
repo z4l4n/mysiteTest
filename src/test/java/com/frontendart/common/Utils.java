@@ -545,6 +545,33 @@ public class Utils extends JunitTestClass {
         driver.findElement(myLocator).sendKeys(text);
     }
 
+    public static boolean doesThisStringListContainsThisAttributeIgnoreCase(final List<String> text, final GeneralTableAttributes column) {
+        boolean returnValue = false;
+
+        // Get names to find
+        String hungarianName = column.getNames().get(0);
+        String hungarianNameWithAsterisk = column.getNames().get(0);
+        String englishName = column.getNames().get(1);
+        String englishNameWithAsterisk = column.getNames().get(1);
+
+        // If we need to find it with ":" characters, we add that
+        if (text.get(0).contains(":")) {
+            hungarianName = hungarianName.concat(":");
+            hungarianNameWithAsterisk = hungarianNameWithAsterisk.concat(":*");
+            englishName = englishName.concat(":");
+            englishNameWithAsterisk = englishNameWithAsterisk.concat(":*");
+        }
+
+        for (String s : text) {
+            if (s.equalsIgnoreCase(hungarianName) || s.equalsIgnoreCase(englishName) || s.equalsIgnoreCase(hungarianNameWithAsterisk)
+                    || s.equalsIgnoreCase(englishNameWithAsterisk)) {
+                returnValue = true;
+            }
+        }
+
+        return returnValue;
+    }
+
     /**
      * Returns true if string contains locator (hungarian or english name)
      *
@@ -552,7 +579,7 @@ public class Utils extends JunitTestClass {
      * @param column
      * @return
      */
-    public static boolean isThisStringListContainsThisAttribute(final List<String> text, final GeneralTableAttributes column) {
+    public static boolean doesThisStringListContainsThisAttribute(final List<String> text, final GeneralTableAttributes column) {
         boolean returnValue = false;
 
         // Get names to find

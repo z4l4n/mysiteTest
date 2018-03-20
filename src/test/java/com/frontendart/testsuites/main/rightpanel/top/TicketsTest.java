@@ -74,7 +74,7 @@ public class TicketsTest extends JunitTestClass {
 		final List<String> visibleLabelsAsString = Utils.convertThisWebElementArrayToStringArray(visibleLabels);
 
 		// Check and close
-		final boolean result = Utils.isThisStringListContainsThisAttribute(visibleLabelsAsString, TicketTableAttributes.ASSIGNEE);
+		final boolean result = Utils.doesThisStringListContainsThisAttribute(visibleLabelsAsString, TicketTableAttributes.ASSIGNEE);
 		Utils.waitForAndClickOnGeneralWebElement(RecordEditorLocators.CLOSE);
 		TopGeneralManager.closeWindow();
 		assertTrue("Assignee field should be visible!", result);

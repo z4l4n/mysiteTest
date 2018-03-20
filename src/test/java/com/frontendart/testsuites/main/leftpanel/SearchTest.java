@@ -385,7 +385,7 @@ public class SearchTest extends JunitTestClass {
         assertTrue("This label " + Utils.getAllMyLabelsAsString(locator) + " is missing.",
                 Utils.myAssertTrue(
                         "Az  1db keresési feltételnek tartalmaznia kell a következő feliratot: " + Utils.getAllMyLabelsAsString(locator),
-                        Utils.isThisStringListContainsThisAttribute(Arrays.asList(labelOfCondition), locator)));
+                        Utils.doesThisStringListContainsThisAttribute(Arrays.asList(labelOfCondition), locator)));
         SearchEditorManager.clickOnCancelButton();
 
         // Cleanup

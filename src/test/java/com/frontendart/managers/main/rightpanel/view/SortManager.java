@@ -201,7 +201,7 @@ public class SortManager {
         addNewSorter();
 
         // Select random locator from sorter
-        final GeneralTableAttributes randomAttribute = GeneralRecordTypes.getRandomAttribute(recordType);
+        final GeneralTableAttributes randomAttribute = GeneralRecordTypes.getRandomUnextendableAttribute(recordType);
         final List<GeneralTableAttributes> selectedAttributes = new ArrayList<>();
         selectedAttributes.add(randomAttribute);
         selectThisAttributeFromSorter(randomAttribute);
@@ -286,7 +286,7 @@ public class SortManager {
             label = activeElement.getText();
 
             // If we found it, then we click on it
-            if (Utils.isThisStringListContainsThisAttribute(Arrays.asList(label), attribute)) {
+            if (Utils.doesThisStringListContainsThisAttributeIgnoreCase(Arrays.asList(label), attribute)) {
                 found = true;
                 activeElement.click();
                 Utils.defaultWait();

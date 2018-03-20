@@ -19,7 +19,7 @@ public enum PublicationRecordAttributes implements GeneralTableAttributes {
             Arrays.asList("Jelleg", "Category"),
             FieldTypeLocators.RECORDSELECTORFIELD,
             Arrays.asList(RecordAttributeFlags.REQUIRED, RecordAttributeFlags.EXTENDABLE)),
-    BOOK(Arrays.asList("Befoglaló mű", "Book"), FieldTypeLocators.RECORDSELECTORFIELD, Arrays.asList(RecordAttributeFlags.DISABLED)),
+    // BOOK(Arrays.asList("Befoglaló mű", "Book"), FieldTypeLocators.RECORDSELECTORFIELD, Arrays.asList(RecordAttributeFlags.DISABLED)),
     LANGUAGE(
             Arrays.asList("Nyelv", "Languages"),
             FieldTypeLocators.RECORDSELECTORLISTFIELD,
@@ -41,12 +41,9 @@ public enum PublicationRecordAttributes implements GeneralTableAttributes {
     NUMBER_OF_CITATIONS(
             Arrays.asList("Idéző közlemények száma", "Citation count"),
             FieldTypeLocators.NUMBERFIELD,
-            Arrays.asList(RecordAttributeFlags.DISABLED)),
-
-    MTMT_AUTHORS(
-            Arrays.asList("Szerzők MTMT-ben", "MTMT authors"),
-            FieldTypeLocators.RECORDSELECTORFIELD,
             Arrays.asList(RecordAttributeFlags.DISABLED));
+
+    // MTMT_AUTHORS( Arrays.asList("Szerzők MTMT-ben", "MTMT authors"),FieldTypeLocators.RECORDSELECTORFIELD,Arrays.asList(RecordAttributeFlags.DISABLED));
 
     List<String>               names;
     FieldTypeLocators          fieldType;

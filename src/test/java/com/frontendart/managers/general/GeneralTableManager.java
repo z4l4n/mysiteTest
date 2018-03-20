@@ -268,7 +268,7 @@ public class GeneralTableManager {
         for (final GeneralTableAttributes attribute : notDisabledAttributes) {
             LOGGER.info(" - " + Utils.getAllMyLabelsAsString(attribute));
             assertTrue("This header should be visible: " + Utils.getAllMyLabelsAsString(attribute),
-                    Utils.isThisStringListContainsThisAttribute(visibleHeaders, attribute));
+                    Utils.doesThisStringListContainsThisAttribute(visibleHeaders, attribute));
         }
 
         return true;

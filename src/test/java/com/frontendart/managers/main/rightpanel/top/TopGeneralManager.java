@@ -78,7 +78,7 @@ public class TopGeneralManager {
 		final List<String> visibleLabelsAsString = Utils.convertThisWebElementArrayToStringArray(visibleLabels);
 
 		final GeneralTableAttributes findThisField = TicketTableAttributes.ASSIGNEE;
-		if (Utils.isThisStringListContainsThisAttribute(visibleLabelsAsString, findThisField)) {
+		if (Utils.doesThisStringListContainsThisAttribute(visibleLabelsAsString, findThisField)) {
 			final WebElement field = CreateRecordManager.findFieldOfThisAttribute(findThisField);
 			GeneralDataProvider.setRandomValueToThisAttribute(field, findThisField);
 		}

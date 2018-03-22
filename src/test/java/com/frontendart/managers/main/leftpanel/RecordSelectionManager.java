@@ -6,12 +6,12 @@ import static org.junit.Assume.assumeTrue;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
@@ -45,8 +45,8 @@ public class RecordSelectionManager {
 
     /**
      * Open record type selector
-     * 
-     * 
+     *
+     *
      */
     public static void openRecordTypeSelector() {
         Utils.waitForElementVisible(RecordSelectionLocators.RECORD_SELECTOR);
@@ -60,39 +60,36 @@ public class RecordSelectionManager {
     public static boolean findThisTypeInSelectorOptionsAndClick(final GeneralRecordTypes recordType) {
         Utils.waitForElementVisible(RecordSelectionLocators.RECORD_SELECTOR_MENU_OPTIONS);
         // Language check (If English is the active, we should check for the English name of the attribute)
-        int nameIndex = 0;
-        final String language = Utils.createGeneralWebElementFromEnum(MainPageLocators.CHANGE_LANGUAGE_BUTTON).getText();
-        if ("English".equals(language)) {
-            nameIndex = 1;
-        }
-        final String text = recordType.getNames().get(nameIndex);
 
-        boolean returnValue = true;
+        final String text = ("English".equals(Utils.createGeneralWebElementFromEnum(MainPageLocators.CHANGE_LANGUAGE_BUTTON).getText()))
+                ? recordType.getNames().get(1)
+                : recordType.getNames().get(0);
+
+        boolean returnValue = false;
 
         try {
-            // Find the record type in the selector menu, if it is not displayed
-            final WebElement selectThis = Utils.createGeneralWebElementFromString(
-                    "//div[starts-with(@id, 'menu-')][contains(@class, 'cycle')]//span[starts-with(@id, 'menucheckitem-')][text()='" + text
-                            + "']");
+            List<WebElement> menuOptions = Utils.createGeneralWebElementsFromXpathString(
+                    RecordSelectionLocators.RECORD_SELECTOR_MENU_OPTIONS.toString());
 
-//			if (!selectThis.isDisplayed()) {
-//				Utils.switchToActiveElement().sendKeys(Keys.UP);
-//				Utils.defaultWait();
-//			}
-            Utils.scrollIntoView(selectThis);
-            Utils.defaultWait();
+            for (WebElement elem : menuOptions) {
+                if (elem.getAttribute("textContent").equalsIgnoreCase(text)) {
+                    Utils.scrollIntoView(elem);
+                    Utils.defaultWait();
+                    elem.click();
+                    returnValue = true;
+                }
+            }
 
-            selectThis.click();
         } catch (final NoSuchElementException e) {
+            System.out.println("Nem található az adott rekord a listában!");
             returnValue = false;
         }
-
         return returnValue;
     }
 
     /**
      * Does cycle
-     * 
+     *
      * @param recordType
      */
     public static boolean searchForThisRecordType(final GeneralRecordTypes recordType) {
@@ -159,7 +156,7 @@ public class RecordSelectionManager {
 
     /**
      * Waits until table headers, and table rows are visible
-     * 
+     *
      */
     public static void waitUntilTableIsReady() {
         // Wait for change view buttons
@@ -178,7 +175,7 @@ public class RecordSelectionManager {
 
     /**
      * Waits until info bar changes
-     * 
+     *
      */
     public static void waitUntilInfoBarChanges() {
         String myInfoText = Utils.createGeneralWebElementFromEnum(RecordSelectionLocators.INFO_BAR_NUMBERS).getText();
@@ -302,8 +299,8 @@ public class RecordSelectionManager {
 
     /**
      * Click on rows
-     * 
-     * 
+     *
+     *
      * @param myGeneralRecordType
      * @return
      *
@@ -348,7 +345,7 @@ public class RecordSelectionManager {
 
     /**
      * Select with shift button
-     * 
+     *
      * @param myGeneralRecordType
      * @return
      *
@@ -395,7 +392,7 @@ public class RecordSelectionManager {
 
     /**
      * Select with shift button
-     * 
+     *
      * @param myGeneralRecordType
      * @return
      */
@@ -431,7 +428,7 @@ public class RecordSelectionManager {
 
     /**
      * Clicks on the given row in the grid table
-     * 
+     *
      * @param rowToClick
      */
     public static void controlClickOnThisRow(final WebElement rowToClick) {
@@ -447,7 +444,7 @@ public class RecordSelectionManager {
 
     /**
      * Clicks on the given row in the grid table
-     * 
+     *
      * @param rowToClick
      */
     public static void shiftClickOnThisRow(final WebElement startRow, final WebElement endRow) {
@@ -462,7 +459,7 @@ public class RecordSelectionManager {
 
     /**
      * Returns the selected items in the view
-     * 
+     *
      * @return
      */
     public static List<WebElement> getSelectedItemsInView() {
@@ -482,7 +479,7 @@ public class RecordSelectionManager {
 
     /**
      * Get labels of general record type
-     * 
+     *
      * @param recordType
      * @return
      */

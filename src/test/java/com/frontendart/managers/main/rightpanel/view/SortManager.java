@@ -4,7 +4,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.text.Collator;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -15,6 +14,8 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
 import com.frontendart.common.Utils;
+import com.frontendart.locators.main.MainPageLocators;
+import com.frontendart.locators.main.leftpanel.RecordSelectionLocators;
 import com.frontendart.locators.main.rightpanel.view.SortLocators;
 import com.frontendart.locators.records.attributes.general.AuthorRecordAttributes;
 import com.frontendart.locators.records.attributes.general.GeneralRecordTypes;
@@ -199,13 +200,14 @@ public class SortManager {
 
         // Adds new sorter
         addNewSorter();
-
+        Utils.defaultWait();
         // Select random locator from sorter
         final GeneralTableAttributes randomAttribute = GeneralRecordTypes.getRandomUnextendableAttribute(recordType);
+
         final List<GeneralTableAttributes> selectedAttributes = new ArrayList<>();
         selectedAttributes.add(randomAttribute);
         selectThisAttributeFromSorter(randomAttribute);
-
+        Utils.defaultWait();
         // Check number of sortings
         checkNumberOfSorters(1);
         // TODO: checkMultipleSorting(driver, recordType, selectedAttributes);
@@ -272,24 +274,23 @@ public class SortManager {
 
         // Get menu options
 
-        List<WebElement> sorterMenuOptionList = Utils.createGeneralWebElementsFromEnum(SortLocators.SORTER_MENU_OPTIONS);
-        WebElement activeElement;
-        int sorterMenuSize = sorterMenuOptionList.size();
         Utils.defaultWait();
-        String label;
 
-        // Start going down to find label
-        int index = 0;
         boolean found = false;
-        while (!found && index < sorterMenuSize) {
-            activeElement = sorterMenuOptionList.get(index++);
-            label = activeElement.getText();
+        final String language = Utils.createGeneralWebElementFromEnum(MainPageLocators.CHANGE_LANGUAGE_BUTTON).getText();
+        String targetLabel = ("English".equals(language) ? attribute.getNames().get(1) : attribute.getNames().get(0));
 
-            // If we found it, then we click on it
-            if (Utils.doesThisStringListContainsThisAttributeIgnoreCase(Arrays.asList(label), attribute)) {
-                found = true;
-                activeElement.click();
+        // Iterating the items of the list and we'll stop if we arrive back to the first element
+
+        List<WebElement> menuOptions = Utils.createGeneralWebElementsFromXpathString(
+                RecordSelectionLocators.RECORD_SELECTOR_MENU_OPTIONS.toString());
+
+        for (WebElement elem : menuOptions) {
+            if (elem.getAttribute("textContent").equalsIgnoreCase(targetLabel)) {
+                Utils.scrollIntoView(elem);
                 Utils.defaultWait();
+                elem.click();
+                found = true;
             }
         }
         Utils.myAssertTrue("Couldn't find the attribute in the sorting list", found);

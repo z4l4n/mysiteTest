@@ -201,6 +201,10 @@ public class Utils extends JunitTestClass {
         return driver.findElements(createGeneralByElementFromEnum(locator));
     }
 
+    public static List<WebElement> createGeneralWebElementsFromXpathString(final String xpathEx) {
+        return driver.findElements(By.xpath(xpathEx));
+    }
+
     /**
      * @author gyizol
      * @param locator
@@ -209,7 +213,6 @@ public class Utils extends JunitTestClass {
      */
     public static boolean waitForAndClickOnGeneralWebElement(final GeneralLocatorTypes locator) {
         waitForElementVisible(locator);
-        //waitForElementClickable(locator); // Én (Zalán) raktam vissza
 
         final WebElement myWebElement = createGeneralWebElementFromEnum(locator);
 

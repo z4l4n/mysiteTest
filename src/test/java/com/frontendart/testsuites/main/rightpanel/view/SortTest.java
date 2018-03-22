@@ -27,7 +27,7 @@ import com.frontendart.managers.main.rightpanel.view.SortManager;
 
 /**
  * This class is responsible for Sort tests.
- * 
+ *
  * @author Zoli
  */
 @Category({ RightPanelViewSuite.class, AUTHOR_Suite.class, INSTITUTIONAL_ADMIN_Suite.class, CENTRAL_ADMIN_Suite.class })
@@ -40,16 +40,18 @@ public class SortTest extends JunitTestClass {
 
     /**
      * Full sort test
-     * 
+     *
      * TODO: Make it work.
-     * 
+     *
      * Redmine issue number: <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1347">#1347</a>
      */
     @Test
     @Category(CoreSuite.class)
     public final void testCreateRandomSorter() {
         // Navigate to random record type
+
         final GeneralRecordTypes recordType = RecordSelectionManager.selectRandomRecordTypeFromSelector();
+        Utils.defaultWait();
         ChangeViewManager.switchToGridView();
         Utils.defaultWait();
 
@@ -68,11 +70,14 @@ public class SortTest extends JunitTestClass {
 
         // Navigate to random record type, and check sort number
         RecordSelectionManager.selectRandomRecordTypeFromSelector();
+        Utils.defaultWait();
         ChangeViewManager.switchToGridView();
+        Utils.defaultWait();
         final int oldNumberOfSortings = SortManager.getNumberOfSorters();
 
         // Click on new sorting button
         Utils.waitForAndClickOnGeneralWebElement(SortLocators.NEW_SORTING_BUTTON);
+        Utils.defaultWait();
 
         // Validate
         if (oldNumberOfSortings == 3) {
@@ -90,14 +95,16 @@ public class SortTest extends JunitTestClass {
     public final void testSortButtonActive() {
         // Select random record type
         RecordSelectionManager.selectRandomRecordTypeFromSelector();
+        Utils.defaultWait();
         ChangeViewManager.switchToGridView();
-
+        Utils.defaultWait();
         // Close all existing sorters
         SortManager.closeAllSorters();
-
+        Utils.defaultWait();
         // Create sortings, and check numbers (1,2,3)
         for (int index = 1; index <= 3; index++) {
             SortManager.addNewSorter();
+            Utils.defaultWait();
             SortManager.checkNumberOfSorters(index);
         }
 

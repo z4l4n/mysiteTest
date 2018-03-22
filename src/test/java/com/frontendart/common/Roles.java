@@ -8,7 +8,7 @@ import com.frontendart.locators.records.attributes.general.GeneralRecordTypes;
 
 /**
  * Enum class for roles
- * 
+ *
  * @author Zoli
  *
  */
@@ -50,7 +50,7 @@ public enum Roles {
 
     /**
      * Constructor
-     * 
+     *
      * @param creditentials
      * @param rights
      */
@@ -65,7 +65,7 @@ public enum Roles {
 
     /**
      * Returns the name of the role
-     * 
+     *
      * @return
      */
     public String getRoleName() {
@@ -74,7 +74,7 @@ public enum Roles {
 
     /**
      * Returns the username of role
-     * 
+     *
      * @return
      */
     public String getUsername() {
@@ -83,7 +83,7 @@ public enum Roles {
 
     /**
      * Returns the password of role
-     * 
+     *
      * @return
      */
     public String getPassword() {
@@ -92,7 +92,7 @@ public enum Roles {
 
     /**
      * Returns the not creatable record types for this role
-     * 
+     *
      * @return
      */
     public EnumSet<GeneralRecordTypes> getCreatableRecordTypes() {
@@ -105,7 +105,7 @@ public enum Roles {
 
     /**
      * Returns editable record types for this role
-     * 
+     *
      * @return
      */
     public EnumSet<GeneralRecordTypes> getEditableRecordTypes() {
@@ -120,7 +120,7 @@ public enum Roles {
 
     /**
      * Returns visible rcord types for this role
-     * 
+     *
      * @return
      */
     public EnumSet<GeneralRecordTypes> getVisibleRecordTypes() {

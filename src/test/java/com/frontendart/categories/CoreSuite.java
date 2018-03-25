@@ -57,8 +57,8 @@ import com.frontendart.testsuites.registration.RegistrationTest;
 	FilterTest.class, // FF, CHR OK ALL_ROLES
 	LockRecordTest.class, SortTest.class, // TODO TUDOMÁNYOS FOKOZAT RENDEZÉS BUG, testSortBySelectingHeader bugot
 					      // talál sztem..
-	ToolbarTest.class, ViewVersionsTest.class, HelpTest.class, LanguageTest.class, RedmineIssuesTest.class,
-	RegistrationTest.class, })
+	ToolbarTest.class, // SEEMS ok, all roles&browsers test is needed
+	ViewVersionsTest.class, HelpTest.class, LanguageTest.class, RedmineIssuesTest.class, RegistrationTest.class, })
 @IncludeCategory(CoreSuite.class)
 /**
  * Test suite for core tests

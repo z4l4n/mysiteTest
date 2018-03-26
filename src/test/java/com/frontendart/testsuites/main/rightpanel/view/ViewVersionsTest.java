@@ -18,7 +18,7 @@ import com.frontendart.managers.main.rightpanel.view.ViewVersionsManager;
 
 /**
  * Parameterized test class for view record.
- * 
+ *
  * @author Zoli
  *
  */
@@ -30,55 +30,53 @@ public class ViewVersionsTest extends SelectRandomRecordTypeJunitTestClass {
     // it will only run once
     @BeforeClass
     public static void beforeMethod() {
-	org.junit.Assume.assumeTrue(Utils.actualRoleIsCentralAdmin());
+        org.junit.Assume.assumeTrue(Utils.actualRoleIsCentralAdmin());
     }
 
     /**
-     * Simple view version Redmine issue number:
-     * <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1362">#1362</a>
-     * 
+     * Simple view version Redmine issue number: <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1362">#1362</a>
+     *
      * TODO: review
      */
     @Test
-    @Category(CoreSuite.class) // sok rekord típus esetén disabled a verziók gomb...
+    @Category(CoreSuite.class) // sok rekord típus esetén disabled a verziók gomb... pl rendszerváltozók, 
     public final void testViewVersions() {
-	Utils.writeMyRedmineIssues("#1362");
+        Utils.writeMyRedmineIssues("#1362");
 
-	// Select random record type, and click on random row
+        // Select random record type, and click on random row
 
-	RecordSelectionManager.selectRandomRenderedRowsFromGridPanel(1);
+        RecordSelectionManager.selectRandomRenderedRowsFromGridPanel(1);
 
-	// Click on Versions button and switch to versions window
-	final int versionsNumber = ViewVersionsManager.getRowNumberOfVersionsTableForActualRecord();
+        // Click on Versions button and switch to versions window
+        final int versionsNumber = ViewVersionsManager.getRowNumberOfVersionsTableForActualRecord();
 
-	// Validate
-	Utils.myAssertTrue("Legalább 1 sornak lennie kell a verzió ablakban.", versionsNumber > 0);
+        // Validate
+        Utils.myAssertTrue("Legalább 1 sornak lennie kell a verzió ablakban.", versionsNumber > 0);
 
     }
 
     /**
-     * Reimplement: View version after status change (duplicated record works
-     * different than other)
+     * Reimplement: View version after status change (duplicated record works different than other)
      */
     /*
      * @Test public final void testViewVersionsAfterStatusChange() { // Select
      * random record type, and select random record final WebElement myRecordRow =
      * RecordSelectionManager.selectRandomRenderedRowsFromGridPanel(1).get(0); final
      * int myRecordID = GeneralTableManager.getIDOfThisRow(myRecordRow);
-     * 
+     *
      * // View versions row number final int oldNumberOfRows =
      * ViewVersionsManager.getRowNumberOfVersionsTableForActualRecord();
-     * 
+     *
      * // Change record status final ChangeStatusTypes originalStatusType =
      * ChangeStatusManager.getStatusValueOfRecord(myRecordRow);
      * ChangeStatusManager.changeStatusTypeOfSelectedRow(myRecordID);
      * Utils.cancelMessageBoxIfVisible();
-     * 
+     *
      * // Validate: View versions row number final int newNumberOfRows =
      * ViewVersionsManager.getRowNumberOfVersionsTableForActualRecord();
      * assertEquals("There should be one more row in the versions table!",
      * oldNumberOfRows + 1, newNumberOfRows);
-     * 
+     *
      * // Cleanup: change status back to original - if possible
      * ChangeStatusManager.changeStatusTypeOfSelectedRowToThis(originalStatusType);
      * }
@@ -94,52 +92,51 @@ public class ViewVersionsTest extends SelectRandomRecordTypeJunitTestClass {
      * int myRecordID = GeneralTableManager.getIDOfThisRow(myRecordRow); final
      * ChangeStatusTypes originalStatusType =
      * ChangeStatusManager.getStatusValueOfRecord(myRecordRow);
-     * 
+     *
      * // View versions, get version number of top row final int versionID =
      * ViewVersionsManager.getActualVersionIDOfRecord();
-     * 
+     *
      * // Change record status
      * ChangeStatusManager.changeStatusTypeOfSelectedRow(myRecordID);
-     * 
+     *
      * // Restore version (the one before actual)
      * ViewVersionsManager.restoreThisVersion(versionID);
      * assertTrue("There should be a success message present",
      * Utils.isMessageBoxPresentWithText(VersionsMessageTypes.SUCCESS));
-     * 
+     *
      * // Validate: Check record status (should be the original) myRecordRow =
      * GeneralTableManager.findThisRecordByID(myRecordID); final ChangeStatusTypes
      * newStatusType = ChangeStatusManager.getStatusValueOfRecord(myRecordRow);
      * assertEquals("The record statuses are not equal!", originalStatusType,
      * newStatusType);
-     * 
+     *
      * }
      */
 
     /**
-     * Simple filter in version view Redmine issue number:
-     * <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/2612">#2612</a>
-     * 
+     * Simple filter in version view Redmine issue number: <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/2612">#2612</a>
+     *
      */
     @Test
     @Category(CoreSuite.class)
     @Ignore // Elvileg nem is kell lennie már szűrésnek a verziók ablakban..
     public final void testFilterInVersionsWindow() {
-	Utils.writeMyRedmineIssues("#2612");
+        Utils.writeMyRedmineIssues("#2612");
 
-	// Select random record type, and click on random row
-	RecordSelectionManager.selectRandomRenderedRowsFromGridPanel(1);
+        // Select random record type, and click on random row
+        RecordSelectionManager.selectRandomRenderedRowsFromGridPanel(1);
 
-	// Click on Versions button and switch to versions window
-	ViewVersionsManager.openVersionsWindow();
+        // Click on Versions button and switch to versions window
+        ViewVersionsManager.openVersionsWindow();
 
-	// Check that there is no filter field present
-	assertFalse("There should not be a filter field in the versions window!",
-		Utils.isThisElementPresent(ViewVersionsLocators.VERSIONS_WINDOW_FILTER_FIELD));
-	assertFalse("There should not be a filter button in the versions window!",
-		Utils.isThisElementPresent(ViewVersionsLocators.VERSIONS_WINDOW_FILTER_BUTTON));
+        // Check that there is no filter field present
+        assertFalse("There should not be a filter field in the versions window!",
+                Utils.isThisElementPresent(ViewVersionsLocators.VERSIONS_WINDOW_FILTER_FIELD));
+        assertFalse("There should not be a filter button in the versions window!",
+                Utils.isThisElementPresent(ViewVersionsLocators.VERSIONS_WINDOW_FILTER_BUTTON));
 
-	// Close versions window
-	ViewVersionsManager.closeVersionsWindow();
+        // Close versions window
+        ViewVersionsManager.closeVersionsWindow();
     }
 
 }

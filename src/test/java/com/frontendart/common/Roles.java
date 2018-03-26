@@ -127,8 +127,9 @@ public enum Roles {
         if ("Intézményi adminisztrátor".equals(roleName)) {
             visibleRecordTypes
                     .removeAll(EnumSet.of(GeneralRecordTypes.CITATION, GeneralRecordTypes.SMART_QUERY, GeneralRecordTypes.NAMED_LIST,
-                            GeneralRecordTypes.TICKET, GeneralRecordTypes.VARIABLE));
+                            GeneralRecordTypes.TICKET, GeneralRecordTypes.VARIABLE, GeneralRecordTypes.FORUM));
         }
+
         return visibleRecordTypes;
     }
 

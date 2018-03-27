@@ -43,21 +43,20 @@ public class SortTest extends JunitTestClass {
      *
      * TODO: Make it work.
      *
-     * Redmine issue number:
-     * <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1347">#1347</a>
+     * Redmine issue number: <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1347">#1347</a>
      */
     @Test
     @Category(CoreSuite.class)
     public final void testCreateRandomSorter() {
-	// Navigate to random record type
+        // Navigate to random record type
 
-	final GeneralRecordTypes recordType = RecordSelectionManager.selectRandomRecordTypeFromSelector();
-	Utils.defaultWait();
-	ChangeViewManager.switchToGridView();
-	Utils.defaultWait();
+        final GeneralRecordTypes recordType = RecordSelectionManager.selectRandomRecordTypeFromSelector();
+        Utils.defaultWait();
+        ChangeViewManager.switchToGridView();
+        Utils.defaultWait();
 
-	// Create sorter for this record type
-	SortManager.createRandomSorterForThisRecordType(recordType);
+        // Create sorter for this record type
+        SortManager.createRandomSorterForThisRecordType(recordType);
     }
 
     /**
@@ -67,25 +66,25 @@ public class SortTest extends JunitTestClass {
     @Test
     @Category(CoreSuite.class)
     public final void testClickOnNewSortingButton() {
-	Utils.writeMyRedmineIssues("#1128");
+        Utils.writeMyRedmineIssues("#1128");
 
-	// Navigate to random record type, and check sort number
-	RecordSelectionManager.selectRandomRecordTypeFromSelector();
-	Utils.defaultWait();
-	ChangeViewManager.switchToGridView();
-	Utils.defaultWait();
-	final int oldNumberOfSortings = SortManager.getNumberOfSorters();
+        // Navigate to random record type, and check sort number
+        RecordSelectionManager.selectRandomRecordTypeFromSelector();
+        Utils.defaultWait();
+        ChangeViewManager.switchToGridView();
+        Utils.defaultWait();
+        final int oldNumberOfSortings = SortManager.getNumberOfSorters();
 
-	// Click on new sorting button
-	Utils.waitForAndClickOnGeneralWebElement(SortLocators.NEW_SORTING_BUTTON);
-	Utils.defaultWait();
+        // Click on new sorting button
+        Utils.waitForAndClickOnGeneralWebElement(SortLocators.NEW_SORTING_BUTTON);
+        Utils.defaultWait();
 
-	// Validate
-	if (oldNumberOfSortings == 3) {
-	    SortManager.checkNumberOfSorters(oldNumberOfSortings);
-	} else {
-	    SortManager.checkNumberOfSorters(oldNumberOfSortings + 1);
-	}
+        // Validate
+        if (oldNumberOfSortings == 3) {
+            SortManager.checkNumberOfSorters(oldNumberOfSortings);
+        } else {
+            SortManager.checkNumberOfSorters(oldNumberOfSortings + 1);
+        }
     }
 
     /**
@@ -94,29 +93,29 @@ public class SortTest extends JunitTestClass {
     @Test
     @Category(CoreSuite.class)
     public final void testSortButtonActive() {
-	// Select random record type
-	RecordSelectionManager.selectRandomRecordTypeFromSelector();
-	Utils.defaultWait();
-	ChangeViewManager.switchToGridView();
-	Utils.defaultWait();
-	// Close all existing sorters
-	SortManager.closeAllSorters();
-	Utils.defaultWait();
-	// Create sortings, and check numbers (1,2,3)
-	for (int index = 1; index <= 3; index++) {
-	    SortManager.addNewSorter();
-	    Utils.defaultWait();
-	    SortManager.checkNumberOfSorters(index);
-	}
+        // Select random record type
+        RecordSelectionManager.selectRandomRecordTypeFromSelector();
+        Utils.defaultWait();
+        ChangeViewManager.switchToGridView();
+        Utils.defaultWait();
+        // Close all existing sorters
+        SortManager.closeAllSorters();
+        Utils.defaultWait();
+        // Create sortings, and check numbers (1,2,3)
+        for (int index = 1; index <= 3; index++) {
+            SortManager.addNewSorter();
+            Utils.defaultWait();
+            SortManager.checkNumberOfSorters(index);
+        }
 
-	// Close one sorting, and check that there are 2 left
-	SortManager.closeThisSorter(1);
-	SortManager.checkNumberOfSorters(2);
+        // Close one sorting, and check that there are 2 left
+        SortManager.closeThisSorter(1);
+        SortManager.checkNumberOfSorters(2);
 
-	// Delete all sortings and check
-	SortManager.closeAllSorters();
-	Utils.defaultWait();
-	SortManager.checkNumberOfSorters(0);
+        // Delete all sortings and check
+        SortManager.closeAllSorters();
+        Utils.defaultWait();
+        SortManager.checkNumberOfSorters(0);
     }
 
     /**
@@ -126,11 +125,11 @@ public class SortTest extends JunitTestClass {
     /*
      * @Test public final void testSortByClickOnHeader() {
      * Utils.writeMyRedmineIssues("#1549");
-     * 
+     *
      * // Navigate to random record type final GeneralRecordTypes recordType =
      * RecordSelectionManager.selectRandomRecordTypeFromSelector();
      * ChangeViewManager.switchToGridView();
-     * 
+     *
      * // Select a header and click on it // TODO: if that header is not visible, we
      * should make it visible. final GeneralTableAttributes randomLocator =
      * GeneralRecordTypes.getRandomAttribute(recordType);
@@ -142,71 +141,70 @@ public class SortTest extends JunitTestClass {
      * randomLocator)) { LOGGER.info("Kattintsunk a " +
      * Utils.getAllMyLabelsAsString(randomLocator) + " nevű oszlop fejlécére.");
      * header.click(); Utils.defaultWait(); header.click(); Utils.defaultWait(); } }
-     * 
+     *
      * // Validate SortManager.checkNumberOfSorters(1); }
      */
     /**
-     * Test sort by selecting header Redmine issue number:
-     * <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1549">#1549</a>
+     * Test sort by selecting header Redmine issue number: <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1549">#1549</a>
      */
     @Test
+
     @Category(CoreSuite.class)
     public final void testSortBySelectingHeader() {
-	Utils.writeMyRedmineIssues("#1549");
+        Utils.writeMyRedmineIssues("#1549");
 
-	// Navigate to random record type
-	final GeneralRecordTypes recordType = RecordSelectionManager.selectRandomRecordTypeFromSelector();
-	ChangeViewManager.switchToGridView();
+        // Navigate to random record type
+        final GeneralRecordTypes recordType = RecordSelectionManager.selectRandomRecordTypeFromSelector();
+        ChangeViewManager.switchToGridView();
 
-	// Select a header and click on it
-	final GeneralTableAttributes randomLocator = GeneralRecordTypes.getRandomAttribute(recordType);
-	LOGGER.info("A következő oszlop szerint szeretnénk rendezni: " + Utils.getAllMyLabelsAsString(randomLocator));
-	for (final WebElement header : GeneralTableManager.getAllVisibleHeadersAsWebElements()) {
-	    final String label = header.findElement(By.xpath("./div/div/div/div/span")).getText();
-	    if (Utils.doesThisStringListContainsThisAttribute(Arrays.asList(label), randomLocator)) {
-		LOGGER.info("Kattintsunk a " + Utils.getAllMyLabelsAsString(randomLocator)
-			+ " oszlop fejlécénél lévő legördülő nyílra, és válasszuk a növekvő sorrendezés opciót.");
-		header.sendKeys(Keys.DOWN);
-		Utils.switchToActiveElement().click();
-		Utils.defaultWait();
-		SortManager.checkNumberOfSorters(1);
-	    }
-	}
+        // Select a header and click on it
+        final GeneralTableAttributes randomLocator = GeneralRecordTypes.getRandomAttribute(recordType);
+        LOGGER.info("A következő oszlop szerint szeretnénk rendezni: " + Utils.getAllMyLabelsAsString(randomLocator));
+        for (final WebElement header : GeneralTableManager.getAllVisibleHeadersAsWebElements()) {
+            final String label = header.findElement(By.xpath("./div/div/div/div/span")).getText();
+            if (Utils.doesThisStringListContainsThisAttribute(Arrays.asList(label), randomLocator)) {
+                LOGGER.info("Kattintsunk a " + Utils.getAllMyLabelsAsString(randomLocator)
+                        + " oszlop fejlécénél lévő legördülő nyílra, és válasszuk a növekvő sorrendezés opciót.");
+                header.sendKeys(Keys.DOWN);
+                Utils.switchToActiveElement().click();
+                Utils.defaultWait();
+                SortManager.checkNumberOfSorters(1);
+            }
+        }
     }
 
     /**
-     * Test sort by selecting header Redmine issue number:
-     * <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1549">#1549</a> I
-     * think this would be a proper testing because we have to have one sorting
-     * before clicking on the header to check if the former one will be removed
+     * Test sort by selecting header Redmine issue number: <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1549">#1549</a> I think
+     * this would be a proper testing because we have to have one sorting before clicking on the header to check if the former one will be
+     * removed
      */
     @Test
     @Category(CoreSuite.class)
     public final void testSortBySelectingHeader2() {
-	final GeneralRecordTypes recordType = RecordSelectionManager.selectRandomRecordTypeFromSelector();
-	Utils.defaultWait();
-	ChangeViewManager.switchToGridView();
-	Utils.defaultWait();
-	SortManager.closeAllSorters();
-	Utils.defaultWait();
+        final GeneralRecordTypes recordType = RecordSelectionManager.selectRandomRecordTypeFromSelector();
+        Utils.defaultWait();
+        ChangeViewManager.switchToGridView();
+        Utils.defaultWait();
+        SortManager.closeAllSorters();
+        Utils.defaultWait();
 
-	// Create sorter for this record type
-	SortManager.createRandomSorterForThisRecordType(recordType);
-	Utils.defaultWait();
-	// Select a header and click on it
-	final GeneralTableAttributes randomLocator = GeneralRecordTypes.getRandomAttribute(recordType);
-	LOGGER.info("A következő oszlop szerint szeretnénk rendezni: " + Utils.getAllMyLabelsAsString(randomLocator));
-	for (final WebElement header : GeneralTableManager.getAllVisibleHeadersAsWebElements()) {
-	    final String label = header.findElement(By.xpath("./div/div/div/div/span")).getText();
-	    if (Utils.doesThisStringListContainsThisAttribute(Arrays.asList(label), randomLocator)) {
-		LOGGER.info("Kattintsunk a " + Utils.getAllMyLabelsAsString(randomLocator)
-			+ " oszlop fejlécénél lévő legördülő nyílra, és válasszuk a növekvő sorrendezés opciót.");
-		header.sendKeys(Keys.DOWN);
-		Utils.switchToActiveElement().click();
-		Utils.defaultWait();
-		SortManager.checkNumberOfSorters(1);
-	    }
-	}
+        // Create sorter for this record type
+        SortManager.createRandomSorterForThisRecordType(recordType);
+        Utils.defaultWait();
+        // Select a header and click on it
+        final GeneralTableAttributes randomLocator = GeneralRecordTypes.getRandomAttribute(recordType);
+        LOGGER.info("A következő oszlop szerint szeretnénk rendezni: " + Utils.getAllMyLabelsAsString(randomLocator));
+        for (final WebElement header : GeneralTableManager.getAllVisibleHeadersAsWebElements()) {
+            final String label = header.findElement(By.xpath("./div/div/div/div/span")).getText();
+            if (Utils.doesThisStringListContainsThisAttribute(Arrays.asList(label), randomLocator)) {
+                LOGGER.info("Kattintsunk a " + Utils.getAllMyLabelsAsString(randomLocator)
+                        + " oszlop fejlécénél lévő legördülő nyílra, és válasszuk a növekvő sorrendezés opciót.");
+                header.sendKeys(Keys.DOWN);
+                Utils.switchToActiveElement().click();
+                Utils.defaultWait();
+                SortManager.checkNumberOfSorters(1);
+            }
+        }
     }
 
     // FURTHER TESTS TO BE IMPLEMENTED

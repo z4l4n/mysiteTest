@@ -59,7 +59,8 @@ public class RedmineIssuesTest extends JunitTestClass {
     /**
      * Create ticket for Admin record type Redmine issue number: <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/2915">#2915</a>
      */
-    @Test // Törlés?
+    @Test
+    @Ignore //DB-be nem írunk
     public final void testCreateTicketForAdminRecordType() {
         Utils.writeMyRedmineIssues("#2915");
 
@@ -92,7 +93,7 @@ public class RedmineIssuesTest extends JunitTestClass {
      * Check publications attribute order Redmine issue number: <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/2957">#2957</a>
      */
     @Test
-    @Category(CoreSuite.class) // seems ok
+    @Category(CoreSuite.class)
     public final void testPublicationsAttributeOrder() {
         Utils.writeMyRedmineIssues("#2957");
 
@@ -134,7 +135,7 @@ public class RedmineIssuesTest extends JunitTestClass {
      *
      * Redmine issue number: <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/2593">#2593</a>
      */
-    @Test //Seems ok
+    @Test
     public final void testChangePasswordForAdmin() {
         Utils.writeMyRedmineIssues("#2593");
 
@@ -204,7 +205,7 @@ public class RedmineIssuesTest extends JunitTestClass {
      * Admin forum button after logout/login Redmine issue number: <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/3135">#3135</a>
      */
     @Test
-    @Category(CoreSuite.class) // SEEMS OK
+    @Category(CoreSuite.class)
     public final void testAdminForumIsNotVisibleWithAuthor() {
         Utils.writeMyRedmineIssues("#3135");
 
@@ -239,7 +240,7 @@ public class RedmineIssuesTest extends JunitTestClass {
      */
     @Test
     @Category(CoreSuite.class)
-    @Ignore //Nincs már idézés típus...
+    @Ignore //Nincs már idézés típus, az idézés kapcsolat pedig más formátumú már lista nézetben
     public final void testCitationListGridView() {
         Utils.writeMyRedmineIssues("#3140");
 

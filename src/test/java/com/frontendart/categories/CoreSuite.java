@@ -55,10 +55,10 @@ import com.frontendart.testsuites.registration.RegistrationTest;
         ChangeUserTest.class, // FF, CHR OK ALL_ROLES
         ChangeViewTest.class, // FF, CHR OK ALL_ROLES, contains DB writing
         FilterTest.class, // FF, CHR OK ALL_ROLES
-        LockRecordTest.class, SortTest.class, // TODO TUDOMÁNYOS FOKOZAT RENDEZÉS BUG, testSortBySelectingHeader bugot
-        // talál sztem..
-        ToolbarTest.class, // FF, CHR ALL ROLES OK EXCEPT THESE ->|  testToolbarCitationsButton pl Forum rekordtípusnál bugot talál sztem
-        ViewVersionsTest.class, // nem igazán tesztelhető..
+        LockRecordTest.class, SortTest.class, // TODO TUDOMÁNYOS FOKOZAT RENDEZÉS BUG, testSortBySelectingHeader bugot talál sztem
+
+        ToolbarTest.class, // FF, CHR ALL ROLES OK EXCEPT THESE ->|  testToolbarCitationsButton pl Forum rekordtípusnál bugot talál sztem (már nem..)
+        ViewVersionsTest.class, // nem tesztelhető, kommentek a TC-knél
         HelpTest.class, //CENTRAL ADMIN ONLY, FF, CHROME OK
         LanguageTest.class, // FF, CHROME OK ALL ROLES
         RedmineIssuesTest.class, // Ticket teszt offolva (db írás miatt)

@@ -39,7 +39,7 @@ public class ViewVersionsTest extends SelectRandomRecordTypeJunitTestClass {
      * TODO: review
      */
     @Test
-    @Category(CoreSuite.class) // sok rekord típus esetén disabled a verziók gomb... pl rendszerváltozók, 
+    @Category(CoreSuite.class) // sok rekord típus esetén disabled a verziók gomb... pl. rendszerváltozók, ez pedig azt feltételezi, hogy mindenhol szerepelnie kéne
     public final void testViewVersions() {
         Utils.writeMyRedmineIssues("#1362");
 
@@ -119,7 +119,7 @@ public class ViewVersionsTest extends SelectRandomRecordTypeJunitTestClass {
      */
     @Test
     @Category(CoreSuite.class)
-    @Ignore // Elvileg nem is kell lennie már szűrésnek a verziók ablakban..
+    @Ignore // Redmine comment szerint szűrésnek már nem is kell lennie itt
     public final void testFilterInVersionsWindow() {
         Utils.writeMyRedmineIssues("#2612");
 

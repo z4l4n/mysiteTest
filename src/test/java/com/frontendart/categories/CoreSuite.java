@@ -55,14 +55,15 @@ import com.frontendart.testsuites.registration.RegistrationTest;
         ChangeUserTest.class, // FF, CHR OK ALL_ROLES
         ChangeViewTest.class, // FF, CHR OK ALL_ROLES, contains DB writing
         FilterTest.class, // FF, CHR OK ALL_ROLES
-        LockRecordTest.class, SortTest.class, // TODO TUDOMÁNYOS FOKOZAT RENDEZÉS BUG, testSortBySelectingHeader bugot talál sztem
+        LockRecordTest.class,
+        SortTest.class, // TODO TUDOMÁNYOS FOKOZAT RENDEZÉS BUG, testSortBySelectingHeader bugot talál sztem
 
         ToolbarTest.class, // FF, CHR ALL ROLES OK EXCEPT THESE ->|  testToolbarCitationsButton pl Forum rekordtípusnál bugot talál sztem (már nem..)
-        ViewVersionsTest.class, // nem tesztelhető, kommentek a TC-knél
+        ViewVersionsTest.class, // Ok, viszont failel, elvileg verziók gomb mindenhol kéne legyen..
         HelpTest.class, //CENTRAL ADMIN ONLY, FF, CHROME OK
         LanguageTest.class, // FF, CHROME OK ALL ROLES
-        RedmineIssuesTest.class, // Ticket teszt offolva (db írás miatt)
-        RegistrationTest.class, })
+        RedmineIssuesTest.class, // Ticket teszt offolva (db írás miatt), ASSUME_ROLE: CENTRAL ADMIN, FF-CHROME OK
+        RegistrationTest.class, })// FF, CHROME OK
 @IncludeCategory(CoreSuite.class)
 /**
  * Test suite for core tests

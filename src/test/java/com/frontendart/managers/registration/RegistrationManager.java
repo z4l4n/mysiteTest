@@ -3,6 +3,8 @@ package com.frontendart.managers.registration;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -219,6 +221,32 @@ public class RegistrationManager {
         // Check successful registration
         clickOnRegisterButtonAndCheckMessage(RegistrationMessageTypes.SUCCESSFUL);
 
+    }
+
+    /**
+     * Generates a password which contains lowercase and uppercase letters and number
+     */
+    public static String generateStrongPassword(int length) {
+        if (length < 3) {
+            throw new IllegalArgumentException("The password length can be smaller than 3!");
+        }
+        int size = Utils.randInt(1, length - 2);
+        String lowerCase = Utils.randomString("abcdefghijklmnopqrstuvwxyz".toCharArray(), size);
+        size = length - size - 1;
+        String upperCase = Utils.randomString("ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray(), size);
+        String number = Utils.randomString("0123456789".toCharArray(), length - (lowerCase.length() + upperCase.length()));
+        char[] pwArray = (lowerCase + upperCase + number).toCharArray();
+        List<Character> pwList = new ArrayList<>();
+        for (char c : pwArray) {
+            pwList.add(c);
+        }
+        Collections.shuffle(pwList);
+
+        StringBuilder builder = new StringBuilder(pwList.size());
+        for (Character ch : pwList) {
+            builder.append(ch);
+        }
+        return builder.toString();
     }
 
 }

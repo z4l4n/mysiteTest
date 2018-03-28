@@ -236,18 +236,41 @@ public class RegistrationTest extends RegistrationJunitTestClass {
     }
 
     /**
-     * Registration test with adding too short password. Minium length is 10 characters
+     * Registration test with too short password. Minimal length is 6 characters for strong pw
      */
 
     @Test
     @Category(CoreSuite.class)
-    public final void testRegistrationWithTooShortPasswordShouldShowErrorMessage() {
+    public final void testRegistrationWithTooShortStrongPasswordShouldShowErrorMessage() {
         // Fill all fields, clear data handling
         RegistrationManager.fillAllRegistrationFields();
-        String pw = Utils.randomString(Constants.CHARSET, 9);
 
+        //generating random pw which contains lowercase, uppercase and number characters and its length is 5
+        String pw = RegistrationManager.generateStrongPassword(5);
+        // List<Character> pw = Arrays.asList((lowerCase + upperCase + number).toCharArray());
         Utils.writeTextToThisField(pw, RegistrationLocators.PASSWORD);
         Utils.writeTextToThisField(pw, RegistrationLocators.PASSWORD_AGAIN);
+        Utils.defaultWait();
+        // Click register button and validate
+        RegistrationManager.clickOnRegisterButtonAndCheckIncorrectField();
+
+    }
+
+    /**
+     * Registration test with too short weak password. Minimal length is 7 characters for weak pw
+     */
+    @Test
+    @Category(CoreSuite.class)
+    public final void testRegistrationWithTooShortWeakPasswordShouldShowErrorMessage() {
+        // Fill all fields, clear data handling
+        RegistrationManager.fillAllRegistrationFields();
+
+        //generating random pw which contains lowercase, uppercase and number characters and its length is 5
+        String pw = Utils.randomString("abcdefghijklmnopqrstuvwxyz".toCharArray(), 6);
+        // List<Character> pw = Arrays.asList((lowerCase + upperCase + number).toCharArray());
+        Utils.writeTextToThisField(pw, RegistrationLocators.PASSWORD);
+        Utils.writeTextToThisField(pw, RegistrationLocators.PASSWORD_AGAIN);
+        Utils.defaultWait();
         // Click register button and validate
         RegistrationManager.clickOnRegisterButtonAndCheckIncorrectField();
     }

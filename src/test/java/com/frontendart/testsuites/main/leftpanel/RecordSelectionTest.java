@@ -46,8 +46,11 @@ public class RecordSelectionTest extends JunitTestClass {
     public final void testDeselectRows() {
         // Select random record type
         RecordSelectionManager.selectRandomRecordTypeFromSelector();
+        Utils.defaultWait();
         SearchManager.createAndRunEmptyQuery();
-
+        Utils.defaultWait();
+        ChangeViewManager.switchToGridView();
+        Utils.defaultWait();
         // Select rows without shift key
         List<WebElement> selectedRows = new ArrayList<>();
         selectedRows = RecordSelectionManager.selectRandomRenderedRowsFromGridPanel();

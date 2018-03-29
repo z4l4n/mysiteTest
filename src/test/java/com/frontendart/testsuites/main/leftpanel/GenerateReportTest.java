@@ -2,8 +2,11 @@ package com.frontendart.testsuites.main.leftpanel;
 
 import static org.junit.Assert.assertFalse;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.Iterator;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -42,18 +45,15 @@ public class GenerateReportTest extends JunitTestClass {
         Utils.writeMyRedmineIssues("#1557#1561");
 
         // Select random record type which should have report template
-//		final EnumSet<GeneralRecordTypes> shouldHaveTemplate = EnumSet.of(GeneralRecordTypes.AUTHOR, GeneralRecordTypes.PUBLICATION, GeneralRecordTypes.INSTITUTE);
-        final EnumSet<GeneralRecordTypes> shouldHaveTemplate = EnumSet.of(GeneralRecordTypes.AUTHOR);
-        final int randNumber = Utils.randInt(0, shouldHaveTemplate.size() - 1);
-        final Iterator<GeneralRecordTypes> iterator = shouldHaveTemplate.iterator();
-        for (int index = 0; index < randNumber; index++) {
-            iterator.next();
-        }
+
+        List<GeneralRecordTypes> shouldHaveTemplate = Arrays.asList(GeneralRecordTypes.AUTHOR, GeneralRecordTypes.PUBLICATION,
+                GeneralRecordTypes.INSTITUTE);
+        Collections.shuffle(shouldHaveTemplate);
 
         //RecordSelectionManager.selectThisRecordTypeFromSelector(iterator.next());
-        RecordSelectionManager.selectThisRecordTypeFromSelectorWithoutRunEmptyQuery(iterator.next());
+        RecordSelectionManager.selectThisRecordTypeFromSelectorWithoutRunEmptyQuery(shouldHaveTemplate.get(0));
         SearchManager.createAndRunEmptyQuery();
-
+        Utils.defaultWait();
         // Open report generation window, and get window label text
         GenerateReportManager.openReportGenerationWindow();
         Utils.defaultWait();
@@ -94,6 +94,28 @@ public class GenerateReportTest extends JunitTestClass {
         // Validate
         assertFalse("The report generation windows shouldn't appear",
                 Utils.isThisElementPresent(GenerateReportLocators.REPORT_GENERATION_WINDOW));
+    }
+
+    /**
+     *
+     * report filtering test
+     */
+    @Test
+    @Category(CoreSuite.class)
+    public void testReportFiltering() {
+        List<GeneralRecordTypes> shouldHaveTemplate = Arrays.asList(GeneralRecordTypes.AUTHOR, GeneralRecordTypes.PUBLICATION,
+                GeneralRecordTypes.INSTITUTE);
+        Collections.shuffle(shouldHaveTemplate);
+
+        RecordSelectionManager.selectThisRecordTypeFromSelectorWithoutRunEmptyQuery(shouldHaveTemplate.get(0));
+        GenerateReportManager.expandReportPanel();
+        Utils.defaultWait();
+        GenerateReportManager.performFiltering("PDF");
+        Utils.defaultWait();
+
+        //Checking the filtering
+        GenerateReportManager.checkIfReportListContainsThisString("PDF");
+
     }
 
     /**

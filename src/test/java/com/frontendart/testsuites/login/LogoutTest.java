@@ -19,6 +19,7 @@ import com.frontendart.managers.login.LogoutManager;
 
 /**
  * Test class for logout tests.
+ *
  * @author Zoli
  *
  */
@@ -26,44 +27,45 @@ import com.frontendart.managers.login.LogoutManager;
 @SuppressWarnings({ "PMD.JUnitTestsShouldIncludeAssert", "PMD.JUnitTestContainsTooManyAsserts" })
 public class LogoutTest extends JunitTestClass {
 
-	/**
-	 * Logger
-	 */
-	private static final Logger LOGGER = LogManager.getLogger("LogoutTest");
+    /**
+     * Logger
+     */
+    private static final Logger LOGGER = LogManager.getLogger("LogoutTest");
 
-	/**
-	 * Simple logout with default values
-	 * 
-	 * Redmine issue number: <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1337">#1337</a>
-	 */
-	@Test
-	@Category(CoreSuite.class)
-	public final void testLogoutWithConfirm() {
-		Utils.writeMyRedmineIssues("#1337");
+    /**
+     * Simple logout with default values
+     *
+     * Redmine issue number: <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1337">#1337</a>
+     */
+    @Test
+    @Category(CoreSuite.class)
+    public final void testLogoutWithConfirm() {
+        Utils.writeMyRedmineIssues("#1337");
 
-		// Click on Logout button
-		LogoutManager.logout();
-		Utils.defaultWait();
+        // Click on Logout button
+        LogoutManager.logout();
+        Utils.defaultWait();
 
-		// Validation
-		//Utils.waitForElementPresent(LoginPageLocators.LOGIN_TABPANEL);
-		Utils.myAssertTrue("Látszódnia kell a Belépés/Login gombnak.", Utils.isThisElementVisible(LoginPageLocators.LOGIN_BUTTON));
-		LoginManager.loginSuccessfullyWithThisRole(Utils.getActualRole());
-	}
+        // Validation
+        //Utils.waitForElementPresent(LoginPageLocators.LOGIN_TABPANEL);
+        Utils.myAssertTrue("Látszódnia kell a Belépés/Login gombnak.", Utils.isThisElementVisible(LoginPageLocators.LOGIN_BUTTON));
+        LoginManager.loginSuccessfullyWithThisRole(Utils.getActualRole());
+    }
 
-	/**
-	 * Simple test logout button
-	 */
-	@Test
-	@Category(CoreSuite.class)
-	public final void testLogoutWithCancel() {
-		// Test logout cancel button
-		Utils.waitForAndClickOnGeneralWebElement(MainPageLocators.LOGOUT_BUTTON);
-		LOGGER.info("Kattintsunk a megjelenő figyelmeztető üzeneten a Mégsem/Cancel gombra.");
-		Utils.cancelMessageBoxIfVisible();
+    /**
+     * Simple test logout button
+     */
+    @Test
+    @Category(CoreSuite.class)
+    public final void testLogoutWithCancel() {
+        // Test logout cancel button
+        Utils.waitForAndClickOnGeneralWebElement(MainPageLocators.LOGOUT_BUTTON);
+        Utils.defaultWait();
+        LOGGER.info("Kattintsunk a megjelenő figyelmeztető üzeneten a Mégsem/Cancel gombra.");
+        Utils.cancelMessageBoxIfVisible();
 
-		// Validation
-		Utils.myAssertTrue("Látszódnia kell a Kijelentkezés/Logout gombnak.", Utils.isThisElementVisible(MainPageLocators.LOGOUT_BUTTON));
-	}
+        // Validation
+        Utils.myAssertTrue("Látszódnia kell a Kijelentkezés/Logout gombnak.", Utils.isThisElementVisible(MainPageLocators.LOGOUT_BUTTON));
+    }
 
 }

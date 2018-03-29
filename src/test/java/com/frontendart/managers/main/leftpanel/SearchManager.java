@@ -62,9 +62,9 @@ public class SearchManager {
 
     /**
      * Returns the new search button as a webelement on the smart queries grid
-     * 
+     *
      * @return
-     * 
+     *
      */
     public static void clickOnNewQueryButton() {
         Utils.waitForAndClickOnGeneralWebElement(MainQueryLocators.NEW_QUERY_BUTTON);
@@ -72,9 +72,9 @@ public class SearchManager {
 
     /**
      * Returns the queries as a list of webElements.
-     * 
+     *
      * @return
-     * 
+     *
      */
     public static List<WebElement> getMyQueriesAsWebElement() {
         return Utils.createGeneralWebElementsFromEnum(MainQueryLocators.ALL_QUERIES);
@@ -82,9 +82,9 @@ public class SearchManager {
 
     /**
      * Returns the number of queries
-     * 
+     *
      * @return
-     * 
+     *
      */
     public static int getNumberOfQueries() {
         return getMyQueriesAsWebElement().size();
@@ -92,9 +92,9 @@ public class SearchManager {
 
     /**
      * Returns the result number
-     * 
+     *
      * @return
-     * 
+     *
      */
     public static String getNumberOfResultsOfThisQuery(final String name) {
         final WebElement queryToFind = findThisQueryByName(Arrays.asList(name));
@@ -103,7 +103,7 @@ public class SearchManager {
 
     /**
      * Starts new query with name
-     * 
+     *
      *
      * @param name
      */
@@ -148,7 +148,7 @@ public class SearchManager {
 
     /**
      * creates new query with name
-     * 
+     *
      */
     public static WebElement createNewQueryWithName(final String name) {
         final List<String> queriesName = getMyQueriesNameAsString();
@@ -174,7 +174,7 @@ public class SearchManager {
 
     /**
      * Waits until one more query is present.
-     * 
+     *
      * @param originalQueryNumber
      */
     public static void waitUntilQueryNumberChanges(final int originalQueryNumber) {
@@ -189,9 +189,18 @@ public class SearchManager {
         }
     }
 
+    public static void renameQueryTo(String oldName, String newName) {
+        openQueryEditorByName(oldName);
+        Utils.defaultWait();
+        Utils.writeTextToThisField(newName, QueryEditorLocators.NAME_INPUT_FIELD);
+        Utils.defaultWait();
+        clickSaveButton();
+        Utils.defaultWait();
+    }
+
     /**
      * Waits until results are ready.
-     * 
+     *
      * @param name
      */
     public static void waitUntilResultsAreReady(final String name) {
@@ -239,9 +248,9 @@ public class SearchManager {
 
     /**
      * Returns the queries name as a list of String
-     * 
+     *
      * @return
-     * 
+     *
      */
     public static List<String> getMyQueriesNameAsString() {
         final List<WebElement> queryNamesAsWebelement = Utils.createGeneralWebElementsFromEnum(MainQueryLocators.ALL_QUERIES_NAME);
@@ -250,7 +259,7 @@ public class SearchManager {
 
     /**
      * Returns the queries name as a list of String
-     * 
+     *
      * @return
      */
     public static WebElement findThisQueryByName(final List<String> name) {
@@ -267,9 +276,9 @@ public class SearchManager {
 
     /**
      * Opens the query editor for a given query (by name)
-     * 
+     *
      * @return
-     * 
+     *
      */
     public static void openQueryEditorByName(final String name) {
         LOGGER.info("Kattintsunk a " + name + " nevű keresés utolsó oszlopában lévő nagyító ikonra.");
@@ -278,7 +287,7 @@ public class SearchManager {
         Utils.scrollIntoView(queryToOpen.findElement(By.xpath(MainQueryLocators.QUERY_OPEN_EDITOR.toString())));
 
         queryToOpen.findElement(By.xpath(MainQueryLocators.QUERY_OPEN_EDITOR.toString())).click();
-//		Utils.clickToWebelementWithAction(queryToOpen.findElement(By.xpath(MainQueryLocators.QUERY_OPEN_EDITOR.toString())));		
+//		Utils.clickToWebelementWithAction(queryToOpen.findElement(By.xpath(MainQueryLocators.QUERY_OPEN_EDITOR.toString())));
 
         Utils.waitForElementPresent(QueryEditorLocators.SAVE_BUTTON);
     }
@@ -296,7 +305,7 @@ public class SearchManager {
 
     /**
      * runs query
-     * 
+     *
      * @param name
      */
     public static void runThisQuery(final String name) {
@@ -311,7 +320,7 @@ public class SearchManager {
 
     /**
      * Save this query to list.
-     * 
+     *
      * @param name
      */
     public static String saveThisQueryToList(final String name) {
@@ -325,7 +334,7 @@ public class SearchManager {
 
     /**
      * Saves query as default
-     * 
+     *
      * @param name
      */
     public static void saveThisQueryAsDefault(final String name) {
@@ -338,7 +347,7 @@ public class SearchManager {
 
     /**
      * deletes query
-     * 
+     *
      * @param name
      *
      */
@@ -365,7 +374,7 @@ public class SearchManager {
 
     /**
      * deletes query
-     * 
+     *
      * @param name
      *
      */
@@ -377,7 +386,7 @@ public class SearchManager {
 
     /**
      * Operation on query
-     * 
+     *
      * @param name
      *
      */
@@ -461,7 +470,7 @@ public class SearchManager {
 
     /**
      * Does the check
-     * 
+     *
      * @param string
      * @param valueInCell
      * @param checkType
@@ -484,7 +493,7 @@ public class SearchManager {
 
     /**
      * Gets the last run text of query
-     * 
+     *
      * @param name
      * @return
      *
@@ -510,10 +519,10 @@ public class SearchManager {
 
     /**
      * filters queries
-     * 
+     *
      *
      * @param name
-     * 
+     *
      */
     public static int filterQueries(final String name) {
         LOGGER.info("Töröljük a keresőpanelnél lévő szűrőmezőt, és írjuk be a következő karaktersorozatot: " + name);
@@ -527,7 +536,7 @@ public class SearchManager {
     /**
      * get my own queries
      *
-     * 
+     *
      */
     public static int getMyOwnSavedQueriesNumber() {
         final int originalQueryNumber = getNumberOfQueries();
@@ -577,7 +586,7 @@ public class SearchManager {
 
     /**
      * Creates and runs an empty query (to get all the records)
-     * 
+     *
      *
      */
     public static void createAndRunEmptyQuery() {
@@ -681,7 +690,7 @@ public class SearchManager {
 
     /**
      * Creates and runs query to get deleted records
-     * 
+     *
      */
     public static void createAndRunDeletedRecordsQuery() {
         final List<String> queriesName = getMyQueriesNameAsString();

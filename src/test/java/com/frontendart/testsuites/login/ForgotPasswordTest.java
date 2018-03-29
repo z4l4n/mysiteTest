@@ -63,7 +63,7 @@ public class ForgotPasswordTest extends DontLoginJunitTestClass {
      */
     @Test
     @Category(CoreSuite.class)
-    public final void testEmptyCaptcha() {
+    public final void testEmptyCaptchaWithCorrectUserame() {
         Utils.writeMyRedmineIssues("#1605");
 
         // Empty captcha
@@ -81,7 +81,7 @@ public class ForgotPasswordTest extends DontLoginJunitTestClass {
      */
     @Test
     @Category(CoreSuite.class)
-    public final void testWrongCaptcha() {
+    public final void testWrongCaptchaWithCorrectUsername() {
         Utils.writeMyRedmineIssues("#1605");
 
         // Wrong captcha

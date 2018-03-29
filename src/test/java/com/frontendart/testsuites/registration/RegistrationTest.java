@@ -171,7 +171,7 @@ public class RegistrationTest extends RegistrationJunitTestClass {
     }
 
     /**
-     * Registration test without accept the data handling policy
+     * Registration test without accepting the data handling policy
      */
     @Test
     @Category(CoreSuite.class)
@@ -290,7 +290,7 @@ public class RegistrationTest extends RegistrationJunitTestClass {
     }
 
     /**
-     * Registration test without fill the required institute field
+     * Registration test without filling the required institute field
      */
     @Test
     @Category(CoreSuite.class)
@@ -382,8 +382,6 @@ public class RegistrationTest extends RegistrationJunitTestClass {
         // Click register button and validate
         RegistrationManager.clickOnRegisterButtonAndCheckIncorrectField();
     }
-
-    //TODO Test without one institute of the two
 
     /**
      * Registration test: with invalid institute

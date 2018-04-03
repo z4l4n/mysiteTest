@@ -16,9 +16,12 @@ public enum KeywordRecordAttributes implements GeneralTableAttributes {
             Arrays.asList("Szó, kifejezés", "Word, expression"),
             FieldTypeLocators.TEXTAREAFIELD,
             Arrays.asList(RecordAttributeFlags.REQUIRED)),
-    ID(Arrays.asList("Azonosító", "Id"), FieldTypeLocators.TEXTFIELD),
+    ID(Arrays.asList("MTMT azonosító", "ID"), FieldTypeLocators.TEXTFIELD, Arrays.asList(RecordAttributeFlags.IS_NOT_DISPLAYED_BY_DEFAULT)),
     COMMENT(Arrays.asList("Megjegyzés", "Comment"), FieldTypeLocators.TEXTAREAFIELD),
-    LABEL(Arrays.asList("Címke", "Label"), FieldTypeLocators.TEXTFIELD, Arrays.asList(RecordAttributeFlags.DISABLED));
+    LABEL(
+            Arrays.asList("Címke", "Label"),
+            FieldTypeLocators.TEXTFIELD,
+            Arrays.asList(RecordAttributeFlags.DISABLED, RecordAttributeFlags.IS_NOT_DISPLAYED_BY_DEFAULT));
 
     List<String>               names;
     FieldTypeLocators          fieldType;

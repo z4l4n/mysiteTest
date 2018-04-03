@@ -216,6 +216,23 @@ public class SearchManager {
 
     }
 
+    public static void selectARandomInstituteOnAdvancedQuerySettingsPanel() {
+        //   Utils.waitForAndClickOnGeneralWebElement(QueryEditorLocators.SEARCH_INSTITUTE_BUTTON);
+        //  Utils.createGeneralWebElementFromString(QueryEditorLocators.SEARCH_INSTITUTE_BUTTON.toString()).click();
+        Utils.createGeneralWebElementFromString(QueryEditorLocators.ADVANCED_SEARCH_WINDOW.toString());
+        Utils.defaultWait();
+
+        List<WebElement> list = Utils.createGeneralWebElementsFromEnum(QueryEditorLocators.INSTITUTE_LIST);
+
+        //click on a random element
+        WebElement selectedOne = list.get(Utils.randInt(0, list.size() - 1));
+        Utils.scrollIntoView(selectedOne);
+        selectedOne.click();
+        Utils.defaultWait();
+        Utils.waitForAndClickOnGeneralWebElement(QueryEditorLocators.SELECT_AND_CLOSE_BUTTON);
+
+    }
+
     /**
      * creates new query
      */
@@ -293,9 +310,16 @@ public class SearchManager {
     }
 
     /**
-     * Clicks on Save button in the editor
+     * Clicks on 'Save And Run' button in the editor
      *
-     * @param name
+     */
+    public static void clickOnSaveAndRunButton() {
+        Utils.waitForAndClickOnGeneralWebElement(QueryEditorLocators.SAVE_AND_RUN_BUTTON);
+        Utils.waitMillisec(2000);
+    }
+
+    /**
+     * Clicks on Save button in the editor
      *
      */
     public static void clickSaveButton() {
@@ -409,36 +433,37 @@ public class SearchManager {
 
         final WebElement activeElement = Utils.switchToActiveElement();
 
-        if (!"myEmptyQuery".equals(name)) {
+        System.out.println("operation: " + operation);
 
-            System.out.println("operation: " + operation);
+        Utils.clickToWebelementWithAction(activeElement.findElement(By.xpath(operation.toString())));
+        /*
 
-            if (operation.toString().contains("Töröl")) {
-                final WebElement deleteQuery = Utils.createGeneralWebElementFromEnum(MainQueryLocators.DELETE_QUERY);
-                deleteQuery.click();
-            }
+        if (operation.toString().contains("Töröl")) {
+            final WebElement deleteQuery = Utils.createGeneralWebElementFromEnum(MainQueryLocators.DELETE_QUERY);
+            deleteQuery.click();
+        }
 
-            else if (operation.toString().contains("Keresés")) {
-                final WebElement runQuery = Utils.createGeneralWebElementFromEnum(MainQueryLocators.RUN_QUERY);
-                runQuery.click();
-            }
+        else if (operation.toString().contains("Keresés")) {
+            final WebElement runQuery = Utils.createGeneralWebElementFromEnum(MainQueryLocators.RUN_QUERY);
+            runQuery.click();
+        }
 
-            else if (operation.toString().contains("Másolás")) {
-                final WebElement runQuery = Utils.createGeneralWebElementFromEnum(MainQueryLocators.COPY_QUERY);
-                runQuery.click();
-            }
+        else if (operation.toString().contains("Másolás")) {
+            final WebElement runQuery = Utils.createGeneralWebElementFromEnum(MainQueryLocators.COPY_QUERY);
+            runQuery.click();
+        }
 
-            else if (operation.toString().contains("Eredmények mentése listaként")) {
-                final WebElement runQuery = Utils.createGeneralWebElementFromEnum(MainQueryLocators.SAVE_RESULTS_AS_QUERY);
-                runQuery.click();
-            }
+        else if (operation.toString().contains("Eredmények mentése listaként")) {
+            final WebElement runQuery = Utils.createGeneralWebElementFromEnum(MainQueryLocators.SAVE_RESULTS_AS_QUERY);
+            runQuery.click();
+        }
 
         }
 
         else {
-            Utils.clickToWebelementWithAction(activeElement.findElement(By.xpath(operation.toString())));
+        Utils.clickToWebelementWithAction(activeElement.findElement(By.xpath(operation.toString())));
         }
-
+        */
         return true;
     }
 

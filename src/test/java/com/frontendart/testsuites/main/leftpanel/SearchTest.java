@@ -16,6 +16,7 @@ import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openqa.selenium.By;
@@ -177,20 +178,20 @@ public class SearchTest extends JunitTestClass {
         /*
         // Create query
         final String name = SearchManager.navigateToRandomRecordAndCreateQuery();
-
+        
         // Check query name
         assertTrue("The search with " + name + "  name not found",
                 Utils.myAssertTrue("A keresések között szerepelnie kell egy " + name + " nevű keresésnek.",
                         SearchManager.getMyQueriesNameAsString().contains(name)));
-
+        
         // Delete query
         SearchManager.deleteThisQuery(name);
-
+        
         // Validate
         assertTrue("In the search there is search with " + name + " name.",
                 Utils.myAssertFalse("A keresések közül törlődik a " + name + " nevű keresés.",
                         SearchManager.getMyQueriesNameAsString().contains(name)));
-
+        
                         */
         final String oldName = SearchManager.navigateToRandomRecordAndCreateQuery();
         String newName = Utils.randomString(Constants.CHARSET, 6);
@@ -336,19 +337,21 @@ public class SearchTest extends JunitTestClass {
      * Test query editor is visible Redmine issue number: <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1649">#1649</a>
      */
     @Test
-    @Category(SimpleSearchSuite.class)
+    @Category({ SimpleSearchSuite.class, CoreSuite.class })
     public final void testQueryEditorIsVisible() {
         Utils.writeMyRedmineIssues("#1649");
 
         // Create query
         final String newName = SearchManager.navigateToRandomRecordAndCreateQuery();
-
+        Utils.defaultWait();
         // Open query editor
         SearchManager.openQueryEditorByName(newName);
 
         // Close editor
         SearchEditorManager.closeQueryEditor();
-        System.out.println("bezár!DELETE IT");
+
+        Utils.defaultWait();
+
         // open query editor by double click
         LOGGER.info("Kattintsunk úgy a " + newName + " nevű keresésre, hogy közben a CTRL gombot lenyomva tartjuk.");
         final Actions myAction = new Actions(driver);
@@ -368,17 +371,19 @@ public class SearchTest extends JunitTestClass {
      * <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1531">#1531</a>
      */
     @Test
-    @Category(SearchWithConditionSuite.class)
+    @Category({ SearchWithConditionSuite.class, CoreSuite.class })
     public final void testSimpleConditionIsPresent() {
         Utils.writeMyRedmineIssues("#1531");
 
         // Navigate to random record type, and create query and go to editor
         final GeneralRecordTypes recordType = RecordSelectionManager.selectRandomRecordTypeFromSelector();
+        Utils.defaultWait();
         SearchManager.checkAndDeleteAllMyQueriesIfTooMuch();
+        Utils.defaultWait();
         final int originalQueryNumber = SearchManager.getNumberOfQueries();
         final String name = Constants.PREFIX + Utils.randomString();
         SearchManager.startNewQuery(name);
-
+        Utils.defaultWait();
         // Add simple condition and save
         GeneralTableAttributes locator = SearchEditorManager.addRandomCondition(recordType);
 
@@ -401,7 +406,7 @@ public class SearchTest extends JunitTestClass {
                         "Az  1db keresési feltételnek tartalmaznia kell a következő feliratot: " + Utils.getAllMyLabelsAsString(locator),
                         Utils.doesThisStringListContainsThisAttribute(Arrays.asList(labelOfCondition), locator)));
         SearchEditorManager.clickOnCancelButton();
-
+        Utils.defaultWait();
         // Cleanup
         SearchManager.deleteThisQuery(name);
     }
@@ -410,25 +415,28 @@ public class SearchTest extends JunitTestClass {
      * Remove one condition from the query, and test if it has disappeared.
      */
     @Test
-    @Category(SearchWithConditionSuite.class)
+    @Category({ SearchWithConditionSuite.class, CoreSuite.class })
     public final void testSimpleConditionDeletion() {
         // Navigate to random record, and add query
         final GeneralRecordTypes recordType = RecordSelectionManager.selectRandomRecordTypeFromSelector();
-
+        Utils.defaultWait();
         // checks queries - if too many queries are present, it removes all of them
         SearchManager.checkAndDeleteAllMyQueriesIfTooMuch();
-
+        Utils.defaultWait();
         // Start query
         final String name = Constants.PREFIX + Utils.randomString();
         SearchManager.startNewQuery(name);
+        Utils.defaultWait();
         final GeneralTableAttributes locator = SearchEditorManager.addRandomCondition(recordType);
         Utils.defaultWait();
 
         // Remove condition and check
         SearchEditorManager.removeCondition(locator);
+        Utils.defaultWait();
         assertTrue("There should be no conditions present! ",
                 Utils.myAssertEquals("0 db keresési feltételnek kell lennie.", SearchEditorManager.getNumberOfConditions(), 0));
         SearchEditorManager.clickOnCancelButton();
+
     }
 
     /**
@@ -436,6 +444,7 @@ public class SearchTest extends JunitTestClass {
      * issue number: <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1424">#1424</a>
      */
     @Test
+    @Ignore // Nincs icon nézet már
     @Category(SearchWithConditionSuite.class)
     public final void testChangeView() {
         Utils.writeMyRedmineIssues("#1297#1424");
@@ -476,16 +485,18 @@ public class SearchTest extends JunitTestClass {
      * query filtering
      */
     @Test
-    @Category(SimpleSearchSuite.class)
+    @Category({ SimpleSearchSuite.class, CoreSuite.class })
     public final void testFilterQuery() {
         // Create query
         final String name = SearchManager.navigateToRandomRecordAndCreateQuery();
+        Utils.defaultWait();
         Utils.myAssertEquals("1 db keresésnek kell szerepelnie a találatok között.", 1, SearchManager.filterQueries(name));
-
+        Utils.defaultWait();
         // Duplicate
         SearchManager.duplicateThisQuery(name);
+        Utils.defaultWait();
         Utils.myAssertEquals("2 db keresésnek kell szerepelnie a találatok között.", 2, SearchManager.filterQueries(name));
-
+        Utils.defaultWait();
         // delete
         String newNameCopy = "";
         final String language = Utils.createGeneralWebElementFromEnum(MainPageLocators.CHANGE_LANGUAGE_BUTTON).getText();
@@ -495,8 +506,11 @@ public class SearchTest extends JunitTestClass {
             newNameCopy = name.concat(" (másolat)");
         }
         SearchManager.deleteThisQuery(newNameCopy);
+        Utils.defaultWait();
         Utils.myAssertEquals("1 db keresésnek kell szerepelnie a találatok között.", 1, SearchManager.filterQueries(name));
+        Utils.defaultWait();
         SearchManager.deleteThisQuery(name);
+        Utils.defaultWait();
         Utils.myAssertEquals("0 db keresésnek kell szerepelnie a találatok között.", 0, SearchManager.filterQueries(name));
     }
 
@@ -513,17 +527,18 @@ public class SearchTest extends JunitTestClass {
 
         // checks queries - if too many queries are present, it removes all of them
         //SearchManager.checkAndDeleteAllMyQueriesIfTooMuch();
-
+        Utils.defaultWait();
         // Get query number
         final int queriesNumber = SearchManager.getNumberOfQueries();
 
         // Get my saved queries number
         final int myOldSavedQueriesNumber = SearchManager.getMyOwnSavedQueriesNumber();
         Utils.myAssertNotEquals("Lennie kell előre definiált keresés(ek)nek.", queriesNumber, myOldSavedQueriesNumber);
-
+        Utils.defaultWait();
         // Create query and check
         final String name = Constants.PREFIX + Utils.randomString();
         SearchManager.createNewQueryWithName(name);
+        Utils.defaultWait();
         Utils.myAssertEquals("A kezdetekhez képest 1-el több saját keresésnek kell szerepelnie a találatok között.",
                 myOldSavedQueriesNumber + 1, SearchManager.getMyOwnSavedQueriesNumber());
 
@@ -597,18 +612,47 @@ public class SearchTest extends JunitTestClass {
     }
 
     /**
+     * <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1133">#1133</a> Redmine issue number:
+     */
+    @Test
+    @Category({ SimpleSearchSuite.class, CoreSuite.class })
+    public void testClickOnSaveAndRunButtonShouldWork() {
+        Utils.writeMyRedmineIssues("#1133");
+
+        RecordSelectionManager.selectRandomRecordTypeFromSelector();
+
+        Utils.defaultWait();
+
+        final String name = Constants.PREFIX + Utils.randomString();
+
+        SearchManager.startNewQuery(name);
+
+        Utils.defaultWait();
+
+        SearchManager.clickOnSaveAndRunButton();
+
+        Utils.defaultWait();
+
+        Utils.myAssertTrue("There should be some results", RecordSelectionManager.gridTableFullSize() > 0);
+
+        // Cleanup
+        SearchManager.deleteThisQuery(name);
+    }
+
+    /**
      * Runs query with one condition ("is met" and after that, "is not met") Redmine issue number:
      * <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1133">#1133</a> Redmine issue number:
      * <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1134">#1134</a> Redmine issue number:
      * <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1190">#1190</a> TODO: Redmine issue number:
      * <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1284">#1284</a> TODO: Redmine issue number:
-     * <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1287">#1287</a> Redmine issue number:
+     *
      * <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1294">#1294</a> Redmine issue number:
      * <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1588">#1588</a> Redmine issue number:
      * <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1650">#1650</a>
      */
+
     @Test
-    @Category(SearchWithConditionSuite.class)
+    @Category({ SearchWithConditionSuite.class, CoreSuite.class })
     public final void testRunQueryWithOneSimpleCondition() {
         Utils.writeMyRedmineIssues("#1133#1134#1190#1294#1588#1650");
 
@@ -624,26 +668,29 @@ public class SearchTest extends JunitTestClass {
         //SearchManager.checkAndDeleteAllMyQueriesIfTooMuch();
         final int originalQueryNumber = SearchManager.getNumberOfQueries();
         final String name = Constants.PREFIX + Utils.randomString();
+        Utils.defaultWait();
         SearchManager.startNewQuery(name);
 
         // Add random condition
         final Map<GeneralTableAttributes, String> attributeValues = new HashMap<>();
-        for (int index = 0; index < 1; index++) {
-            final GeneralTableAttributes attribute = SearchEditorManager.addRandomCondition(myGeneralRecordType);
-            final String value = SearchEditorManager.getValueFromLastCondition(attribute);
-            attributeValues.put(attribute, value);
-        }
+
+        final GeneralTableAttributes attribute = SearchEditorManager.addRandomCondition(myGeneralRecordType);
+        final String value = SearchEditorManager.getValueFromLastCondition(attribute);
+        attributeValues.put(attribute, value);
 
         // Save query
         SearchManager.clickSaveButton();
         SearchManager.waitUntilQueryNumberChanges(originalQueryNumber);
         SearchManager.runThisQuery(name);
+        Utils.defaultWait();
         SearchManager.checkQueryResult(attributeValues, SearchCheckTypes.IS_EVERY_IS_MET);
 
         // Is not met part, validate
         LOGGER.info("Kattintsunk a Tartalmazza/Is met gombra.");
         SearchEditorManager.changeIsMetConditionOfThisQuery(name);
+        Utils.defaultWait();
         SearchManager.runThisQuery(name);
+        Utils.defaultWait();
         SearchManager.checkQueryResult(attributeValues, SearchCheckTypes.IS_EVERY_IS_NOT_MET);
 
         // Cleanup
@@ -654,19 +701,24 @@ public class SearchTest extends JunitTestClass {
      * save query to list.
      */
     @Test
-    @Category(SimpleSearchSuite.class)
+    @Category({ SimpleSearchSuite.class, CoreSuite.class })
     public final void testSaveQueryAsList() {
         // Create query and run
         final String name = SearchManager.navigateToRandomRecordAndCreateQuery();
+        Utils.defaultWait();
         SearchManager.runThisQuery(name);
+        Utils.defaultWait();
 
         // Duplicate
         final String nameOfSavedList = SearchManager.saveThisQueryToList(name);
+        Utils.defaultWait();
         SavedListsManager.expandListPanel();
+        Utils.defaultWait();
         assertTrue("The list should be present.", SavedListsManager.getSavedListsNamesAsString().contains(nameOfSavedList));
 
         // Cleanup
         SavedListsManager.deleteThisListByName(nameOfSavedList);
+        Utils.defaultWait();
         SearchManager.deleteThisQuery(name);
     }
 
@@ -686,11 +738,11 @@ public class SearchTest extends JunitTestClass {
     	@Category(SearchWithConditionSuite.class)
     	public final void testSearchByID() {
     		Utils.writeMyRedmineIssues("#2196");
-    
+
     		// Select Author  record type, and select one row
     		RecordSelectionManager.selectThisRecordTypeFromSelector(GeneralRecordTypes.AUTHOR);
     		ChangeViewManager.switchToGridView();
-    
+
     		// Get mtID of selected row
     		final String label = Utils.createGeneralWebElementFromEnum(MainPageLocators.CHANGE_LANGUAGE_BUTTON).getText();
     		if ("English".equals(label)) {
@@ -706,23 +758,23 @@ public class SearchTest extends JunitTestClass {
     		}
     		final WebElement myRow = RecordSelectionManager.selectRandomRenderedRowsFromGridPanel(1).get(0);
     		final int idToFind = GeneralTableManager.getIDOfThisRow(myRow);
-    
+
     		// Create new query
     		SearchManager.checkAndDeleteAllMyQueriesIfTooMuch();
     		final int oldNumberOfQueries = SearchManager.getNumberOfQueries();
     		final String name = Utils.randomString();
     		SearchManager.startNewQuery(name);
-    
+
     		// Add "id" condition with the ID we would like to find, and save query
     		final Map<GeneralTableAttributes, String> attributeValues = new HashMap<GeneralTableAttributes, String>();
     		attributeValues.put(AuthorRecordAttributes.ID, Integer.toString(idToFind));
     		SearchEditorManager.addConditionWithThisAttribute(attributeValues);
     		SearchManager.clickSaveButton();
     		SearchManager.waitUntilQueryNumberChanges(oldNumberOfQueries);
-    
+
     		// Run query
     		SearchManager.runThisQuery(name);
-    
+
     		// Check result (validate)
     		if (!oldVisibleHeaders.contains("MTMT azonosító")) {
     			GeneralTableManager.changeTheVisibilityOfThisHeader("MTMT azonosító");
@@ -731,7 +783,7 @@ public class SearchTest extends JunitTestClass {
     		assertEquals("There should be one record in the results table!", 1, RecordSelectionManager.gridTableFullSize());
     		final int idOfFirstRow = GeneralTableManager.getIDOfThisRow(RecordSelectionManager.getGridElementsOnPage().get(0));
     		assertEquals("The ID of the result record is not correct!", idToFind, idOfFirstRow);
-    
+
     		// Cleanup
     		SearchManager.deleteThisQuery(name);
     	}
@@ -789,7 +841,7 @@ public class SearchTest extends JunitTestClass {
      * Redmine issue number: <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/3395">#3395</a>
      */
     @Test
-    @Category(SearchWithConditionSuite.class)
+    @Category({ SearchWithConditionSuite.class, CoreSuite.class })
     public final void testRunQueryWithConditionOnlySpaces() {
         Utils.writeMyRedmineIssues("#3395");
 
@@ -809,6 +861,17 @@ public class SearchTest extends JunitTestClass {
         Utils.acceptMessageBoxIfVisible();
         SearchEditorManager.clickOnCancelButton();
 
+    }
+
+    /**
+     * issue number: <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1589">#1589</a>
+     */
+    @Test
+    public void testAdvancedQueryShouldWorkAfterAddingAnInstitute() {
+        Utils.writeMyRedmineIssues("#1589");
+        final String name = SearchManager.navigateToRandomRecordAndCreateQuery();
+        SearchManager.performThisOperationOnThisQuery(name, MainQueryLocators.ADVANCED);
+        SearchManager.selectARandomInstituteOnAdvancedQuerySettingsPanel();
     }
 
     // FURTHER TESTS TO BE IMPLEMENTED

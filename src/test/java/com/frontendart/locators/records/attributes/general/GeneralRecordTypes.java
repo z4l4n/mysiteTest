@@ -405,7 +405,8 @@ public enum GeneralRecordTypes {
     public static List<GeneralTableAttributes> getSearchableAttributes(final Class<? extends GeneralTableAttributes> attributes) {
         final List<GeneralTableAttributes> searchableAttributes = new ArrayList<>();
         for (final GeneralTableAttributes attribute : attributes.getEnumConstants()) {
-            if (!attribute.getAttributeFlags().contains(RecordAttributeFlags.NOT_SEARCHABLE)) {
+            if (!(attribute.getAttributeFlags().contains(RecordAttributeFlags.NOT_SEARCHABLE)
+                    || attribute.getAttributeFlags().contains(RecordAttributeFlags.IS_NOT_DISPLAYED_BY_DEFAULT))) {
                 searchableAttributes.add(attribute);
             }
         }

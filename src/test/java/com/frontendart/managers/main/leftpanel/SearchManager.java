@@ -216,21 +216,28 @@ public class SearchManager {
 
     }
 
-    public static void selectARandomInstituteOnAdvancedQuerySettingsPanel() {
-        //   Utils.waitForAndClickOnGeneralWebElement(QueryEditorLocators.SEARCH_INSTITUTE_BUTTON);
-        //  Utils.createGeneralWebElementFromString(QueryEditorLocators.SEARCH_INSTITUTE_BUTTON.toString()).click();
-        Utils.createGeneralWebElementFromString(QueryEditorLocators.ADVANCED_SEARCH_WINDOW.toString());
+    public static void selectRandomVisibilityOnAdvancedQuerySettingsPanel() {
+        Utils.createGeneralWebElementFromEnum(QueryEditorLocators.MIN_VISIBILITY_LIST_BUTTON).click();
+        Utils.defaultWait();
+        List<WebElement> list = Utils.createGeneralWebElementsFromEnum(QueryEditorLocators.MIN_VISIBILITY_LIST);
+        list.get(Utils.randInt(0, list.size() - 1)).click();
+
+    }
+
+    public static void selectRandomInstituteOnAdvancedQuerySettingsPanel() {
+        Utils.createGeneralWebElementFromString(QueryEditorLocators.SEARCH_INSTITUTE_BUTTON.toString()).click();
+
         Utils.defaultWait();
 
         List<WebElement> list = Utils.createGeneralWebElementsFromEnum(QueryEditorLocators.INSTITUTE_LIST);
+        System.out.println(list.size());
 
         //click on a random element
         WebElement selectedOne = list.get(Utils.randInt(0, list.size() - 1));
         Utils.scrollIntoView(selectedOne);
         selectedOne.click();
         Utils.defaultWait();
-        Utils.waitForAndClickOnGeneralWebElement(QueryEditorLocators.SELECT_AND_CLOSE_BUTTON);
-
+        Utils.createGeneralWebElementFromEnum(QueryEditorLocators.SELECT_AND_CLOSE_BUTTON).click();
     }
 
     /**

@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assume.assumeTrue;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -36,6 +37,7 @@ import com.frontendart.common.Utils;
 import com.frontendart.junitclasses.JunitTestClass;
 import com.frontendart.locators.main.MainPageLocators;
 import com.frontendart.locators.main.leftpanel.MainQueryLocators;
+import com.frontendart.locators.main.leftpanel.QueryEditorLocators;
 import com.frontendart.locators.records.attributes.general.AuthorRecordAttributes;
 import com.frontendart.locators.records.attributes.general.GeneralRecordTypes;
 import com.frontendart.locators.records.attributes.general.GeneralTableAttributes;
@@ -178,20 +180,20 @@ public class SearchTest extends JunitTestClass {
         /*
         // Create query
         final String name = SearchManager.navigateToRandomRecordAndCreateQuery();
-        
+
         // Check query name
         assertTrue("The search with " + name + "  name not found",
                 Utils.myAssertTrue("A keresések között szerepelnie kell egy " + name + " nevű keresésnek.",
                         SearchManager.getMyQueriesNameAsString().contains(name)));
-        
+
         // Delete query
         SearchManager.deleteThisQuery(name);
-        
+
         // Validate
         assertTrue("In the search there is search with " + name + " name.",
                 Utils.myAssertFalse("A keresések közül törlődik a " + name + " nevű keresés.",
                         SearchManager.getMyQueriesNameAsString().contains(name)));
-        
+
                         */
         final String oldName = SearchManager.navigateToRandomRecordAndCreateQuery();
         String newName = Utils.randomString(Constants.CHARSET, 6);
@@ -867,11 +869,82 @@ public class SearchTest extends JunitTestClass {
      * issue number: <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1589">#1589</a>
      */
     @Test
+    @Category({ SimpleSearchSuite.class, CoreSuite.class })
     public void testAdvancedQueryShouldWorkAfterAddingAnInstitute() {
+        // bug appears at Inst. admin level
+        assumeTrue(Utils.getActualRole() == Roles.INSTITUTIONAL_ADMIN);
+
         Utils.writeMyRedmineIssues("#1589");
+
         final String name = SearchManager.navigateToRandomRecordAndCreateQuery();
         SearchManager.performThisOperationOnThisQuery(name, MainQueryLocators.ADVANCED);
-        SearchManager.selectARandomInstituteOnAdvancedQuerySettingsPanel();
+        SearchManager.selectRandomInstituteOnAdvancedQuerySettingsPanel();
+        Utils.defaultWait();
+        Utils.createGeneralWebElementFromEnum(QueryEditorLocators.ADVANCED_SAVE_BUTTON).click();
+        Utils.defaultWait();
+        Utils.myAssertFalse("There shouldnt be an error window on the screen.", Utils.isErrorWindowVisible());
+        // Cleanup
+        SearchManager.deleteThisQuery(name);
+    }
+
+    /**
+     * issue number: <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1612">#1589</a>
+     */
+    @Test
+    @Category({ SimpleSearchSuite.class, CoreSuite.class })
+    public void testQueryShouldntDisappearAfterSettingMinVisibility() {
+        // bug appears at Inst. admin level
+        assumeTrue(Utils.getActualRole() == Roles.CENTRAL_ADMIN);
+
+        Utils.writeMyRedmineIssues("#1612");
+
+        final String name = SearchManager.navigateToRandomRecordAndCreateQuery();
+        SearchManager.performThisOperationOnThisQuery(name, MainQueryLocators.ADVANCED);
+        Utils.defaultWait();
+        SearchManager.selectRandomVisibilityOnAdvancedQuerySettingsPanel();
+        Utils.defaultWait();
+        Utils.createGeneralWebElementFromEnum(QueryEditorLocators.ADVANCED_SAVE_BUTTON).click();
+        Utils.defaultWait();
+        Utils.myAssertTrue("The queries list should contain the created query!", SearchManager.getMyQueriesNameAsString().contains(name));
+        // Cleanup
+        SearchManager.deleteThisQuery(name);
+
+    }
+
+    /**
+     * issue number: <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/5301">#5301</a>
+     */
+    @Test
+    @Category({ SimpleSearchSuite.class, CoreSuite.class })
+    public void testQueryNamesShouldBeVisibleAfterChangingLanguage() {
+        Utils.writeMyRedmineIssues("#5301");
+
+        // Switching to Hungarian lang
+        WebElement langButton = Utils.createGeneralWebElementFromEnum(MainPageLocators.CHANGE_LANGUAGE_BUTTON);
+        if ("English".equals(langButton.getText())) {
+            langButton.click();
+            Utils.defaultWait();
+            Utils.createGeneralWebElementFromEnum(MainPageLocators.CHANGE_LANGUAGE_HUNGARIAN).click();
+            Utils.defaultWait();
+        }
+
+        // Creating a query
+        String name = SearchManager.navigateToRandomRecordAndCreateQuery();
+        Utils.defaultWait();
+        Utils.myAssertTrue("The newly generated query should be visible!", SearchManager.getMyQueriesNameAsString().contains(name));
+
+        // Switching to English lang
+        Utils.createGeneralWebElementFromEnum(MainPageLocators.CHANGE_LANGUAGE_BUTTON).click();
+        Utils.defaultWait();
+        Utils.createGeneralWebElementFromEnum(MainPageLocators.CHANGE_LANGUAGE_ENGLISH).click();
+        Utils.defaultWait();
+
+        // Validating
+        Utils.myAssertTrue("The newly generated query should be visible after switching to English!",
+                SearchManager.getMyQueriesNameAsString().contains(name));
+
+        // Cleanup
+        SearchManager.deleteThisQuery(name);
     }
 
     // FURTHER TESTS TO BE IMPLEMENTED

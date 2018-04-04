@@ -111,7 +111,7 @@ public class RecordSelectionTest extends JunitTestClass {
      */
     @Test
     @Ignore
-    // IGNORE-t kiszedni! (zalan)
+    // IGNORE-t kiszedni!
     public final void testHomeAndEndButtons() {
         // Select random record type
         RecordSelectionManager.selectRandomRecordTypeFromSelector();

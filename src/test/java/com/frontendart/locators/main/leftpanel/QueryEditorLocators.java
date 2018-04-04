@@ -106,14 +106,17 @@ public enum QueryEditorLocators implements GeneralLocatorTypes {
             SEARCH_PANEL + "//span[text()='Mentés és keresés' or text()='Save and search']",
             Arrays.asList("Mentés és keresés", "Save and search")),
 
-    //Advanced query editor locators
+    // Advanced query editor locators
     ADVANCED_SEARCH_WINDOW("/html/body/div[starts-with(@id, 'searchadvancedsettings')]"),
     SEARCH_INSTITUTE_BUTTON(ADVANCED_SEARCH_WINDOW + "/div[2]/div[1]/div[1]/div[1]/div[1]/div[3]//div[contains(@id, 'trigger-search')]"),
-    // SEARCH_INSTITUTE_BUTTON(ADVANCED_SEARCH_WINDOW + "//div[contains(@id, 'trigger-search')]"),
-    FIND_INSTITUTE_WINDOW("body/div[starts-with(@id, 'findinstituteswindow')]"),
-    INSTITUTE_LIST(FIND_INSTITUTE_WINDOW + "/div[2]//div[contains(@id, 'x-grid-item-container')]/table"),
-
-    SELECT_AND_CLOSE_BUTTON(FIND_INSTITUTE_WINDOW + "//span[text()='Kiválaszt és bezár' or text()='Select and close']");
+    FIND_INSTITUTE_WINDOW("/html/body/div[starts-with(@id, 'findinstituteswindow')]"),
+    INSTITUTE_LIST(FIND_INSTITUTE_WINDOW + "/div[2]/div[2]/div//span"),
+    SELECT_AND_CLOSE_BUTTON(FIND_INSTITUTE_WINDOW + "//span[text()='Kiválaszt és bezár' or text()='Select and close']"),
+    ADVANCED_SAVE_BUTTON(ADVANCED_SEARCH_WINDOW + "//span[text()='Save' or text()='Mentés']"),
+    MIN_VISIBILITY_LIST_BUTTON(
+            ADVANCED_SEARCH_WINDOW
+                    + "/div[2]/div[1]/div/div/div/div[1]//div[contains(@id,'trigger-picker')]"),
+    MIN_VISIBILITY_LIST("/html/body/div[contains(@id, 'picker')]//li");
 
     private final String locator;
     List<String>         names;

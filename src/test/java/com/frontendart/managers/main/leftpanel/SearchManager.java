@@ -26,6 +26,7 @@ import com.frontendart.common.TestConfiguration;
 import com.frontendart.common.Utils;
 import com.frontendart.locators.main.leftpanel.MainQueryLocators;
 import com.frontendart.locators.main.leftpanel.QueryEditorLocators;
+import com.frontendart.locators.main.rightpanel.view.SortLocators;
 import com.frontendart.locators.records.attributes.general.AuthorTypeRecordAttributes;
 import com.frontendart.locators.records.attributes.general.CitationRecordAttributes;
 import com.frontendart.locators.records.attributes.general.GeneralRecordAttributes;
@@ -35,7 +36,6 @@ import com.frontendart.locators.records.attributes.general.InstituteRecordAttrib
 import com.frontendart.locators.records.attributes.general.KeywordRecordAttributes;
 import com.frontendart.locators.records.attributes.general.PublicationRecordAttributes;
 import com.frontendart.managers.general.GeneralTableManager;
-import com.frontendart.managers.general.GeneralTableManager.TableOrder;
 import com.frontendart.managers.main.leftpanel.SearchEditorManager.SearchCondition;
 import com.frontendart.managers.main.leftpanel.SearchEditorManager.SearchMatchType;
 import com.frontendart.managers.main.rightpanel.crud.DeleteRecordManager;
@@ -750,8 +750,22 @@ public class SearchManager {
     public static void cleanup(int numberOfRecordsToDelete) {
         // Cleanup
         ChangeViewManager.switchToGridView();
+        Utils.defaultWait();
         SortManager.closeAllSorters();
-        GeneralTableManager.changeOrderOnThisHeader(GeneralRecordAttributes.LAST_MODIFICATION, TableOrder.DESC);
+        Utils.defaultWait();
+        SortManager.addNewSorter();
+        SortManager.selectThisAttributeFromSorter(GeneralRecordAttributes.LAST_MODIFICATION);
+        Utils.defaultWait();
+        WebElement arrow = Utils.createGeneralWebElementFromEnum(SortLocators.SORTER_ARROW);
+        if ("↑".equals(arrow.getText())) {
+            arrow.click();
+            Utils.defaultWait();
+            Utils.createGeneralWebElementFromEnum(SortLocators.SORT_OPTION_DESCENDING).click();
+        }
+        Utils.defaultWait();
+        // SortManager.
+        //Utils.defaultWait();
+        //GeneralTableManager.changeOrderOnThisHeader(GeneralRecordAttributes.LAST_MODIFICATION, TableOrder.DESC);
         // remove the query which was needed to get all of the records
 //				if (getMyQueriesNameAsString().contains(Constants.MY_EMPTY_QUERY_NAME)) {
 //					deleteThisQuery(Constants.MY_EMPTY_QUERY_NAME);

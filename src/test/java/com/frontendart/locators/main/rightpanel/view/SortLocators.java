@@ -7,7 +7,7 @@ import com.frontendart.locators.general.GeneralLocatorTypes;
 
 /**
  * Enum class for sort items
- * 
+ *
  * @author Zoli
  *
  */
@@ -22,9 +22,9 @@ public enum SortLocators implements GeneralLocatorTypes {
     ALL_SORTERS(SORTING_WIDGET + "//*/div[starts-with(@id, 'sorter')][starts-with(@class, 'x-btn-group ')]"),
     // ALL_SORTERS(//div[translate(@id,'0123456789','')='sorter-'])
     SORTER_SELECTOR("./div/div/div/div/a"),
-    SORTER_ARROW("./div/div/div/div/a[2]/span/span"),
+    SORTER_ARROW(RIGHT_PANEL + "//span[text()='↓' or text()='↑']"),
     SORT_OPTION_ASCENDING("(//a[contains(@class, 'x-menu-item-focus')]/../..//a)[1]", Arrays.asList("Növekvő", "Ascending")),
-    SORT_OPTION_DESCENDING("(//a[contains(@class, 'x-menu-item-focus')]/../..//a)[2]", Arrays.asList("Csökkenő", "Descending")),
+    SORT_OPTION_DESCENDING("//div[starts-with(@id, 'menu')]//span[text()='↓' and starts-with(@id, 'menucheckitem')]"),
     CLOSE_SORTER("./div/div/div/div/a[3]"),
     DELETE_ALL_SORTING_BUTTON(
             SORTING_WIDGET + "//*/a[starts-with(@data-qtip, 'Minden rendezés törlése') or "
@@ -40,7 +40,7 @@ public enum SortLocators implements GeneralLocatorTypes {
 
     /**
      * Constructor
-     * 
+     *
      * @param itemId
      */
     private SortLocators(final String locator) {
@@ -49,7 +49,7 @@ public enum SortLocators implements GeneralLocatorTypes {
 
     /**
      * Constructor
-     * 
+     *
      * @param itemId
      * @param englishName
      * @param hungarianName

@@ -359,7 +359,8 @@ public enum GeneralRecordTypes {
     public static List<GeneralTableAttributes> getNotDisabledAttributes(final Class<? extends GeneralTableAttributes> attributes) {
         final List<GeneralTableAttributes> notDisabledAttributes = new ArrayList<>();
         for (final GeneralTableAttributes attribute : attributes.getEnumConstants()) {
-            if (!attribute.getAttributeFlags().contains(RecordAttributeFlags.DISABLED)) {
+            if (!(attribute.getAttributeFlags().contains(RecordAttributeFlags.DISABLED)
+                    || attribute.getAttributeFlags().contains(RecordAttributeFlags.IS_NOT_DISPLAYED_BY_DEFAULT))) {
                 notDisabledAttributes.add(attribute);
             }
         }

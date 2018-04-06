@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * Enum class for message box locators and load mask locators
- * 
+ *
  * @author Zoli
  *
  */
@@ -22,7 +22,7 @@ public enum GeneralPageLocators implements GeneralLocatorTypes {
     MESSAGE_BOX_YES_BUTTON("//div[contains(@id, 'messagebox')]//span[text()='Igen' or text()='Yes']", Arrays.asList("Igen", "Yes")),
     MESSAGE_BOX_SAVE_BUTTON("//div[contains(@id, 'messagebox')]//span[text()='Mentés' or text()='Save']", Arrays.asList("Mentés", "Save")),
     MESSAGE_BOX_CANCEL_BUTTON(
-            "//div[contains(@id, 'messagebox')]//span[text()='Mégsem' or text()='Cancel']",
+            MESSAGE_BOX + "//span[text()='Mégse' or text()='Cancel']",
             Arrays.asList("Mégse", "Cancel")),
     MESSAGE_BOX_SHOW_RESULTS_BUTTON(
             "//div[contains(@id, 'messagebox')]//span[text()='Eredmények megtekintése' or text()='Show results']",
@@ -68,7 +68,7 @@ public enum GeneralPageLocators implements GeneralLocatorTypes {
 
     WARNING_WINDOW("//div[contains(@id, 'messagebox-') and (text()='Figyelem')]", Arrays.asList("Figyelem", "Warning")),
     INVALID_WINDOW(
-            "//div[contains(@id, 'messagebox-') and ((text()='Érvénytelen bejegyzés') or text()='Invalid record']",
+            "//div[contains(@id, 'messagebox-') and ((text()='Érvénytelen bejegyzés') or (text()='Invalid record'))]",
             Arrays.asList("Érvénytelen bejegyzés", "Invalid record")),
 
     // Load mask locators
@@ -147,7 +147,7 @@ public enum GeneralPageLocators implements GeneralLocatorTypes {
 
     /**
      * Constructor
-     * 
+     *
      * @param itemId
      */
     private GeneralPageLocators(final String locator) {
@@ -156,7 +156,7 @@ public enum GeneralPageLocators implements GeneralLocatorTypes {
 
     /**
      * Constructor
-     * 
+     *
      * @param itemId
      * @param englishName
      * @param hungarianName

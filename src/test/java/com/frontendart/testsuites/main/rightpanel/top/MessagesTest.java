@@ -22,6 +22,7 @@ import com.frontendart.managers.main.rightpanel.top.TopGeneralManager;
 
 /**
  * Class for message test
+ * 
  * @author Zoli
  *
  */
@@ -29,29 +30,24 @@ import com.frontendart.managers.main.rightpanel.top.TopGeneralManager;
 @SuppressWarnings({ "PMD.JUnitTestsShouldIncludeAssert", "PMD.JUnitTestContainsTooManyAsserts" })
 public class MessagesTest extends MessagesJunitTestClass {
 
-	/**
-	 * Create random message
-	 * 
-	 * TODO: reimplement
-	 */
+    /**
+     * Check table headers
+     * 
+     * Redmine issue number: <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/2183">#2183</a>
+     */
+    @Test
+    @Category(CoreSuite.class)
+    public final void testCheckDuplicatedTableHeaders() throws InterruptedException {
+        Utils.writeMyRedmineIssues("#2183");
 
-	/**
-	 * Check table headers
-	 * 
-	 * Redmine issue number: <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/2183">#2183</a>
-	 */
-	@Test
-	@Category(CoreSuite.class)
-	public final void testCheckDuplicatedTableHeaders() throws InterruptedException {
-		Utils.writeMyRedmineIssues("#2183");
+        // Get visible headers
+        final List<String> listOfHeaders = GeneralTableManager
+                .getAllVisibleHeadersText(GeneralPageLocators.MESSAGE_CENTER_WINDOW_GRIDPANEL);
+        final Set<String> setOfHeaders = new HashSet<>(listOfHeaders);
+        TopGeneralManager.closeWindow();
 
-		// Get visible headers
-		final List<String> listOfHeaders = GeneralTableManager.getAllVisibleHeadersText(GeneralPageLocators.MESSAGE_CENTER_WINDOW_GRIDPANEL);
-		final Set<String> setOfHeaders = new HashSet<String>(listOfHeaders);
-		TopGeneralManager.closeWindow();
-
-		// Validation
-		assertEquals("There are duplicate headers in the Messages table!", setOfHeaders.size(), listOfHeaders.size());
-	}
+        // Validation
+        assertEquals("There are duplicate headers in the Messages table!", setOfHeaders.size(), listOfHeaders.size());
+    }
 
 }

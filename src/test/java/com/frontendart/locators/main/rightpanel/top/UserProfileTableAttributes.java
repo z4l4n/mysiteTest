@@ -9,55 +9,59 @@ import com.frontendart.locators.records.attributes.general.RecordAttributeFlags;
 
 /**
  * Enum class for locating the elements on the user data page
+ *
  * @author Zoli
  *
  */
-public enum UserProfileTableAttributes implements GeneralTableAttributes {	
-	GIVEN_NAME(Arrays.asList("Keresztnév", "given name"), FieldTypeLocators.TEXTFIELD),
-	AUX_NAME(Arrays.asList("Egyértelműsítő név", "aux. name"), FieldTypeLocators.TEXTFIELD),
-	FAMILY_NAME(Arrays.asList("Családnév", "family name"), FieldTypeLocators.TEXTFIELD);
-	//BIRTH_PLACE(Arrays.asList("Születési hely", "Birth Place"), FieldTypeLocators.TEXTFIELD),
-	//BIRTH_DATE(Arrays.asList("Születés ideje", "Birth Date"), FieldTypeLocators.PARTIAL_DATE);
-	
-	List<String> names;
-	FieldTypeLocators fieldType;
-	List<RecordAttributeFlags> attributeFlags;
+public enum UserProfileTableAttributes implements GeneralTableAttributes {
+    GIVEN_NAME(Arrays.asList("Keresztnév", "Given name"), FieldTypeLocators.TEXTFIELD),
+    AUX_NAME(Arrays.asList("Egyértelműsítő név", "Disambiguating name"), FieldTypeLocators.TEXTFIELD),
+    FAMILY_NAME(Arrays.asList("Családnév", "Family name"), FieldTypeLocators.TEXTFIELD),
+    EMAIL(Arrays.asList("Email", "Email"), FieldTypeLocators.EMAILFIELD);
+    //BIRTH_PLACE(Arrays.asList("Születési hely", "Birth Place"), FieldTypeLocators.TEXTFIELD),
+    //BIRTH_DATE(Arrays.asList("Születés ideje", "Birth Date"), FieldTypeLocators.PARTIAL_DATE);
 
-	/**
-	 * Constructor
-	 * @param names
-	 * @param fieldType
-	 * @param required
-	 * @param isDisabledByDefault
-	 */
-	private UserProfileTableAttributes(final List<String> names, final FieldTypeLocators fieldType) {
-		this.names = names;
-		this.fieldType = fieldType;
-		this.attributeFlags = Arrays.asList(RecordAttributeFlags.NONE);
-	}
+    List<String>               names;
+    FieldTypeLocators          fieldType;
+    List<RecordAttributeFlags> attributeFlags;
 
-	/**
-	 * Returns names
-	 */
-	@Override
-	public List<String> getNames() {
-		return this.names;
-	}
+    /**
+     * Constructor
+     *
+     * @param names
+     * @param fieldType
+     * @param required
+     * @param isDisabledByDefault
+     */
+    private UserProfileTableAttributes(final List<String> names, final FieldTypeLocators fieldType) {
+        this.names = names;
+        this.fieldType = fieldType;
+        attributeFlags = Arrays.asList(RecordAttributeFlags.NONE);
+    }
 
-	/**
-	 * Returns attribute flags
-	 * @return
-	 */
-	@Override
-	public List<RecordAttributeFlags> getAttributeFlags() {
-		return this.attributeFlags;
-	}
+    /**
+     * Returns names
+     */
+    @Override
+    public List<String> getNames() {
+        return names;
+    }
 
-	/**
-	 * Returns field types
-	 */
-	@Override
-	public FieldTypeLocators getFieldType() {
-		return this.fieldType;
-	}
+    /**
+     * Returns attribute flags
+     *
+     * @return
+     */
+    @Override
+    public List<RecordAttributeFlags> getAttributeFlags() {
+        return attributeFlags;
+    }
+
+    /**
+     * Returns field types
+     */
+    @Override
+    public FieldTypeLocators getFieldType() {
+        return fieldType;
+    }
 }

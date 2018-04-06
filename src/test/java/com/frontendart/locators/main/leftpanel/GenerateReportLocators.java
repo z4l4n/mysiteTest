@@ -67,11 +67,15 @@ public enum GenerateReportLocators implements GeneralLocatorTypes {
             REPORT_GENERATION_WINDOW + "//div[contains(@class, 'x-tool-img')]",
             Arrays.asList("Bezárás", "Close")),
 
+    //div[starts-with(@id, 'reporteditor') and ends-with(@id, 'innerCt')]/div[1]//input
     // Name, template, saved search, file type - input fields
-    NAME_INPUT("(" + REPORT_EDITOR_PANEL + "//*/input)[1]", Arrays.asList("Riport név", "Report name")),
+    NAME_INPUT(
+            REPORT_GENERATION_WINDOW + "//div[starts-with(@id, 'reporteditor') and ends-with(@id, 'innerCt')]/div[1]//input",
+            Arrays.asList("Riport név", "Report name")),
+    // NAME_INPUT("(" + REPORT_EDITOR_PANEL + "//*/input)[1]", Arrays.asList("Riport név", "Report name")),
     REPORT_TEMPLATE_INPUT("(" + REPORT_EDITOR_PANEL + "//*/input)[2]", Arrays.asList("Riport sablon", "Report template")),
     SAVED_SEARCH_INPUT("(" + REPORT_EDITOR_PANEL + "//*/input)[3]", Arrays.asList("Mentett keresés", "Saved search")),
-    FILE_TYPE_INPUT("(" + REPORT_EDITOR_PANEL + "//*/input)[4]", Arrays.asList("Fájl formátum", "File type")),
+    FILE_TYPE_INPUT("(" + REPORT_EDITOR_PANEL + "//*/input)[3]", Arrays.asList("Fájl formátum", "File type")),
     LIST_INPUT("(" + REPORT_EDITOR_PANEL + "//*/input)[5]", Arrays.asList("Lista", "List")),
 
     // Generate report button

@@ -22,7 +22,6 @@ import com.frontendart.locators.main.leftpanel.GenerateReportLocators;
 import com.frontendart.locators.records.attributes.general.GeneralRecordTypes;
 import com.frontendart.managers.main.leftpanel.GenerateReportManager;
 import com.frontendart.managers.main.leftpanel.RecordSelectionManager;
-import com.frontendart.managers.main.leftpanel.SearchManager;
 
 /**
  * Test class for generate report
@@ -50,9 +49,8 @@ public class GenerateReportTest extends JunitTestClass {
                 GeneralRecordTypes.INSTITUTE);
         Collections.shuffle(shouldHaveTemplate);
 
-        //RecordSelectionManager.selectThisRecordTypeFromSelector(iterator.next());
         RecordSelectionManager.selectThisRecordTypeFromSelectorWithoutRunEmptyQuery(shouldHaveTemplate.get(0));
-        SearchManager.createAndRunEmptyQuery();
+
         Utils.defaultWait();
         // Open report generation window, and get window label text
         GenerateReportManager.openReportGenerationWindow();
@@ -84,10 +82,9 @@ public class GenerateReportTest extends JunitTestClass {
         for (int index = 0; index < randNumber; index++) {
             iterator.next();
         }
-        //RecordSelectionManager.selectThisRecordTypeFromSelector(iterator.next());
 
         RecordSelectionManager.selectThisRecordTypeFromSelectorWithoutRunEmptyQuery(iterator.next());
-        SearchManager.createAndRunEmptyQuery();
+
         GenerateReportManager.openReportGenerationWindow();
         Utils.defaultWait();
 
@@ -118,6 +115,16 @@ public class GenerateReportTest extends JunitTestClass {
 
     }
 
+    @Test
+    public void testGeneratingReport() {
+        RecordSelectionManager.selectThisRecordTypeFromSelector(GeneralRecordTypes.PUBLICATION);
+        Utils.defaultWait();
+        GenerateReportManager.expandReportPanel();
+        Utils.defaultWait();
+        GenerateReportManager.createRandomReport();
+
+    }
+
     /**
      * Reimplement Generates simple report Redmine issue number: <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1237">#1237</a>
      * Redmine issue number: <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1238">#1238</a> Redmine issue number:
@@ -127,6 +134,7 @@ public class GenerateReportTest extends JunitTestClass {
      *
      */
     /*
+
     @Test
     public final void testGenerateSimpleRandomReport() {
     	Utils.writeMyRedmineIssues("#1237#1238#1270#1272#1538");

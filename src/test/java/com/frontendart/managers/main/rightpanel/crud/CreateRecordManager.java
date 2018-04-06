@@ -15,6 +15,7 @@ import com.frontendart.common.Utils;
 import com.frontendart.locators.main.MainPageLocators;
 import com.frontendart.locators.main.rightpanel.crud.RecordEditorLocators;
 import com.frontendart.locators.main.rightpanel.crud.RecordEditorMessageTypes;
+import com.frontendart.locators.main.rightpanel.top.UserProfileTableAttributes;
 import com.frontendart.locators.records.attributes.general.GeneralRecordTypes;
 import com.frontendart.locators.records.attributes.general.GeneralTableAttributes;
 import com.frontendart.locators.records.attributes.general.RecordAttributeFlags;
@@ -32,8 +33,12 @@ public class CreateRecordManager {
 
     /**
      * simple create new record
-     * 
+     *
      */
+
+    public static void fillPasswordConfirmAfterChangingUserData() {
+
+    }
 
     public static void createRecord(final GeneralRecordTypes myRecordType) {
         // click on new button
@@ -97,7 +102,7 @@ public class CreateRecordManager {
     /**
      * fills required fields only
      */
-    private static void fillRequiredFieldsOnly(final List<GeneralTableAttributes> notDisabledAttributes) {
+    public static void fillRequiredFieldsOnly(final List<? extends GeneralTableAttributes> notDisabledAttributes) {
         for (final GeneralTableAttributes attribute : notDisabledAttributes) {
             if (attribute.getAttributeFlags().contains(RecordAttributeFlags.REQUIRED)) {
                 final WebElement field = findFieldOfThisAttribute(attribute);
@@ -120,14 +125,22 @@ public class CreateRecordManager {
 
     /**
      * Finds the field
-     * 
+     *
      * @param attribute
      */
     public static WebElement findFieldOfThisAttribute(final GeneralTableAttributes attribute) {
         Utils.defaultWait();
 
-        final List<WebElement> allFields = Utils.createGeneralWebElementsFromEnum(RecordEditorLocators.EDITOR_FORM_FIELDS);
-        final List<WebElement> allLabels = Utils.createGeneralWebElementsFromEnum(RecordEditorLocators.EDITOR_FORM_FIELDS_LABEL);
+        final List<WebElement> allFields;
+        final List<WebElement> allLabels;
+        if (attribute instanceof UserProfileTableAttributes) {
+            allFields = Utils.createGeneralWebElementsFromEnum(RecordEditorLocators.USER_EDITOR_FORM_FIELDS);
+            allLabels = Utils.createGeneralWebElementsFromEnum(RecordEditorLocators.USER_EDITOR_FORM_FIELDS_LABEL);
+        } else {
+            allFields = Utils.createGeneralWebElementsFromEnum(RecordEditorLocators.EDITOR_FORM_FIELDS);
+            allLabels = Utils.createGeneralWebElementsFromEnum(RecordEditorLocators.EDITOR_FORM_FIELDS_LABEL);
+        }
+
         final List<String> allLabelsAsString = Utils.convertThisWebElementArrayToStringArray(allLabels);
 
         // Language check (If English is the active, we should check for the English name of the attribute)
@@ -158,7 +171,7 @@ public class CreateRecordManager {
 
     /**
      * Click on save and close button
-     * 
+     *
      */
     public static void clickOnSaveAndCloseButton() {
         Utils.waitForAndClickOnGeneralWebElement(RecordEditorLocators.SAVE_AND_CLOSE);

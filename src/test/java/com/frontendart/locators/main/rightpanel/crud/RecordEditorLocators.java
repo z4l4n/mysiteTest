@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 
 import com.frontendart.common.Utils;
 import com.frontendart.locators.general.GeneralLocatorTypes;
+import com.frontendart.locators.main.rightpanel.top.UserProfileTableAttributes;
 import com.frontendart.locators.records.attributes.general.GeneralTableAttributes;
 import com.frontendart.locators.records.attributes.general.RecordAttributeFlags;
 
@@ -55,8 +56,31 @@ public enum RecordEditorLocators implements GeneralLocatorTypes {
     CHANGE_STATE_VALIDATED("//li[contains(@class, 'combo-status-validated')]", Arrays.asList("Érvényesített", "Validated")),
     CHANGE_STATE_CHECKED("//li[contains(@class, 'combo-status-checked')]", Arrays.asList("Hitelesített", "Checked")),
 
-    //EDITOR_WINDOW("//div[starts-with(@id, 'modeleditorwindow')][starts-with(@class, 'x-window ')][last()]", Arrays.asList("Szerkesztő ablak", "Editor window")),
-    EDITOR_WINDOW("//div[starts-with(@class, 'x-window ')][last()]", Arrays.asList("Szerkesztő ablak", "Editor window")),
+    // user editor stuffs
+    USER_EDITOR_WINDOW("/html/body/div[starts-with(@id, 'usereditorwindow')]"),
+    USER_EDITOR_HEADER(USER_EDITOR_WINDOW + "//*/div[contains(@class, 'x-window-header-title')]/div"),
+    USER_EDITOR_FORM(USER_EDITOR_WINDOW + "//*/div[starts-with(@id, 'modeleditform')][starts-with(@class, 'x-panel ')]"),
+    USER_EDITOR_FORM_FIELDS(USER_EDITOR_FORM + "//div[contains(@class, ' x-form-item x-form-item-default ')]"),
+    USER_EDITOR_FORM_VISIBLE_FIELDS(
+            USER_EDITOR_FORM + "//div[contains(@class, ' x-form-item x-form-item-default ')][not(contains(@style, 'display: none'))]"),
+    USER_EDITOR_FORM_FIELDS_LABEL(USER_EDITOR_FORM_FIELDS + "//label[contains(@class, 'x-form-item-label ')]"),
+    USER_EDITOR_FORM_FIELDS_VISIBLE_LABELS(USER_EDITOR_FORM_FIELDS + "[not(contains(@style, 'display: none'))]//span"),
+    USER_EDITOR_FORM_FIELDS_VISIBLE_LABELS_ALTERNATIVE(USER_EDITOR_FORM_FIELDS + "[not(contains(@style, 'display: none'))]//label"),
+    USER_CANCEL_BUTTON(USER_EDITOR_WINDOW + "//span[text()='Mégse' or text()='Cancel']", Arrays.asList("Mégse", "Cancel")),
+    USER_SAVE_AND_CLOSE(
+            USER_EDITOR_WINDOW
+                    + "//*/span[text()='Mentés és bezárás' or text()='Save and close' or text()='Csatol & bezár' or text()='Connect & close']",
+            Arrays.asList("Mentés és bezárás", "Save and close")),
+    //
+
+    // user editor password confirm
+    PASSWORD_CONFIRM_WINDOW("/html/body/div[starts-with(@id, 'window') and @role='dialog']"),
+    PASSWORD_CONFIRM_OK_BUTTON(PASSWORD_CONFIRM_WINDOW + "//span[text()='Küldés' or text()='Send']"),
+    PASSWORD_CONFIRM_INPUT_FIELD(PASSWORD_CONFIRM_WINDOW + "//input"),
+    //
+
+    EDITOR_WINDOW("/html/body/div[starts-with(@id, 'modeleditorwindow')][1]"),
+    //  EDITOR_WINDOW("//div[starts-with(@class, 'x-window ')][last()]", Arrays.asList("Szerkesztő ablak", "Editor window")),
     MODEL_EDITOR_WINDOW(
             "//div[starts-with(@id, 'modeleditorwindow')][starts-with(@class, 'x-window ')][last()]",
             Arrays.asList("Szerkesztő ablak", "Editor window")),
@@ -68,7 +92,7 @@ public enum RecordEditorLocators implements GeneralLocatorTypes {
     EDITOR_FORM_FIELDS_LABEL(EDITOR_FORM_FIELDS + "//label[contains(@class, 'x-form-item-label ')]"),
     EDITOR_FORM_FIELDS_VISIBLE_LABELS(EDITOR_FORM_FIELDS + "[not(contains(@style, 'display: none'))]//span"),
     EDITOR_FORM_FIELDS_VISIBLE_LABELS_ALTERNATIVE(EDITOR_FORM_FIELDS + "[not(contains(@style, 'display: none'))]//label"),
-    CANCEL_BUTTON(EDITOR_WINDOW + "//*/span[text()='Mégse' or text()='Cancel']", Arrays.asList("Mégsem", "Cancel")),
+    CANCEL_BUTTON(EDITOR_WINDOW + "//span[text()='Mégse' or text()='Cancel']", Arrays.asList("Mégse", "Cancel")),
     SAVE_AND_CLOSE(
             EDITOR_WINDOW
                     + "//*/span[text()='Mentés és bezárás' or text()='Save and close' or text()='Csatol & bezár' or text()='Connect & close']",
@@ -116,7 +140,7 @@ public enum RecordEditorLocators implements GeneralLocatorTypes {
 
     /**
      * Constructor
-     * 
+     *
      * @param itemId
      */
     private RecordEditorLocators(final String locator) {
@@ -125,7 +149,7 @@ public enum RecordEditorLocators implements GeneralLocatorTypes {
 
     /**
      * Constructor
-     * 
+     *
      * @param itemId
      * @param englishName
      * @param hungarianName
@@ -153,7 +177,7 @@ public enum RecordEditorLocators implements GeneralLocatorTypes {
 
     /**
      * Checks if table attributes are present on editor page
-     * 
+     *
      * @param pageToValidate
      * @return
      */
@@ -161,7 +185,13 @@ public enum RecordEditorLocators implements GeneralLocatorTypes {
         boolean returnValue = true;
 
         // Get labels
-        final List<WebElement> labelsAsWebElement = Utils.createGeneralWebElementsFromEnum(EDITOR_FORM_FIELDS_VISIBLE_LABELS);
+        final List<WebElement> labelsAsWebElement;
+        if (pageToValidate.equals(UserProfileTableAttributes.class)) {
+            labelsAsWebElement = Utils.createGeneralWebElementsFromEnum(USER_EDITOR_FORM_FIELDS_VISIBLE_LABELS);
+        } else {
+            labelsAsWebElement = Utils.createGeneralWebElementsFromEnum(EDITOR_FORM_FIELDS_VISIBLE_LABELS);
+        }
+        //= Utils.createGeneralWebElementsFromEnum(EDITOR_FORM_FIELDS_VISIBLE_LABELS);
         final List<String> labelsAsString = Utils.convertThisWebElementArrayToStringArray(labelsAsWebElement);
 
         // Check that all not disabled locators are present

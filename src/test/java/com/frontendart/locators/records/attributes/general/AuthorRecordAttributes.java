@@ -17,7 +17,10 @@ public enum AuthorRecordAttributes implements GeneralTableAttributes {
             Arrays.asList("Születési hely", "Birth Place"),
             FieldTypeLocators.TEXTFIELD,
             Arrays.asList(RecordAttributeFlags.REQUIRED, RecordAttributeFlags.NOT_SEARCHABLE)),
-    USERNAME(Arrays.asList("Felhasználónév", "Username"), FieldTypeLocators.TEXTFIELD, Arrays.asList(RecordAttributeFlags.DISABLED)),
+    USERNAME(
+            Arrays.asList("Felhasználónév", "Username"),
+            FieldTypeLocators.TEXTFIELD,
+            Arrays.asList(RecordAttributeFlags.REQUIRED, RecordAttributeFlags.IS_NOT_DISPLAYED_BY_DEFAULT)),
     BIRTH_DATE(
             Arrays.asList("Születés ideje", "Birth Date"),
             FieldTypeLocators.PARTIAL_DATE,
@@ -33,7 +36,7 @@ public enum AuthorRecordAttributes implements GeneralTableAttributes {
     AFFILIATIONS(
             Arrays.asList("Intézményhez csatolás", "Affiliations"),
             FieldTypeLocators.RECORDSELECTORLISTFIELD,
-            Arrays.asList(RecordAttributeFlags.REQUIRED, RecordAttributeFlags.EXTENDABLE)),
+            Arrays.asList(RecordAttributeFlags.EXTENDABLE)),
     EMAIL_ADDRESS_CONFIRMED(
             Arrays.asList("Email cím jóváhagyva", "Email address confirmed"),
             FieldTypeLocators.CHECKBOXFIELD,
@@ -41,11 +44,15 @@ public enum AuthorRecordAttributes implements GeneralTableAttributes {
     LOGIN_ENABLED(
             Arrays.asList("Belépés engedélyezve", "Login enabled"),
             FieldTypeLocators.CHECKBOXFIELD,
-            Arrays.asList(RecordAttributeFlags.REQUIRED)),
+            Arrays.asList(RecordAttributeFlags.IS_NOT_DISPLAYED_BY_DEFAULT)),
     EMAIL(
             Arrays.asList("Email", "Email"),
             FieldTypeLocators.EMAILFIELD,
-            Arrays.asList(RecordAttributeFlags.REQUIRED, RecordAttributeFlags.NOT_SEARCHABLE));
+            Arrays.asList(RecordAttributeFlags.REQUIRED, RecordAttributeFlags.NOT_SEARCHABLE)),
+    DEATH_DATE(
+            Arrays.asList("Halálozás ideje", "Death date"),
+            FieldTypeLocators.PARTIAL_DATE,
+            Arrays.asList(RecordAttributeFlags.NOT_SEARCHABLE));
 
     List<String>               names;
     FieldTypeLocators          fieldType;

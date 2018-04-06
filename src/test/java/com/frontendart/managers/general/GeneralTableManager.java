@@ -312,6 +312,7 @@ public class GeneralTableManager {
         final List<String> headerTexts = getAllHeadersText();
         WebElement headerToClick = headers.get(headerTexts.indexOf(header.getNames().get(0)));
         Utils.scrollIntoView(headerToClick);
+        Utils.defaultWait();
         headerToClick.click();
         Utils.waitForRightPanelLoadingFinished();
         if (order == TableOrder.DESC) {

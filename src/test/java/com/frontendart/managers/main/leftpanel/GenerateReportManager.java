@@ -86,6 +86,8 @@ public class GenerateReportManager {
         LOGGER.info("Kattintsunk a Riport sablon/Report template legördülő menübe és válasszuk az első opciót.");
         final WebElement reportTemplateField = Utils.createGeneralWebElementFromEnum(GenerateReportLocators.REPORT_TEMPLATE_INPUT);
         reportTemplateField.sendKeys(Keys.DOWN);
+        reportTemplateField.sendKeys(Keys.DOWN);
+        reportTemplateField.sendKeys(Keys.DOWN);
         reportTemplateField.sendKeys(Keys.ENTER);
     }
 

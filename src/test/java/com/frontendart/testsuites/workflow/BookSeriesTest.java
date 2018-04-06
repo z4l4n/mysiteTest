@@ -25,6 +25,8 @@ public class BookSeriesTest extends JunitTestClass {
     public void testStartPublishingYearCantBeSmallerThanEndYear() {
         assumeTrue(Utils.actualRoleIsCentralAdmin());
 
+        Utils.writeMyRedmineIssues("#5183");
+
         RecordSelectionManager.selectThisRecordTypeFromSelector(GeneralRecordTypes.BOOK_SERIES);
         Utils.defaultWait();
         CreateRecordManager.clickOnNewButton();
@@ -34,13 +36,13 @@ public class BookSeriesTest extends JunitTestClass {
         WebElement sy = CreateRecordManager.findFieldOfThisAttribute(BookSeriesRecordAttributes.START_YEAR);
         WebElement ey = CreateRecordManager.findFieldOfThisAttribute(BookSeriesRecordAttributes.END_YEAR);
 
-        GeneralDataProvider.setValueToThisAttribute(id, BookSeriesRecordAttributes.TITLE,
-                Constants.PREFIX + Utils.randomString());
+        GeneralDataProvider.setValueToThisAttribute(id, BookSeriesRecordAttributes.TITLE, Constants.PREFIX + Utils.randomString());
         GeneralDataProvider.setValueToThisAttribute(sy, BookSeriesRecordAttributes.START_YEAR, "1996");
         GeneralDataProvider.setValueToThisAttribute(ey, BookSeriesRecordAttributes.START_YEAR, "1992");
         Utils.waitForAndClickOnGeneralWebElement(RecordEditorLocators.SAVE_AND_CLOSE);
         Utils.defaultWait();
-        boolean wasError = Utils.isErrorWindowVisible();
+        boolean wasError = Utils.isInvalidWindowVisible();
+
         if (wasError) {
             Utils.cancelMessageBoxIfVisible();
             Utils.defaultWait();
@@ -49,7 +51,7 @@ public class BookSeriesTest extends JunitTestClass {
             SearchManager.cleanup();
         }
 
-        Utils.myAssertFalse("There should have been an error message because of the invalid date interval!", wasError);
+        Utils.myAssertTrue("There must be an error message because of the invalid date interval.", wasError);
     }
 
 }

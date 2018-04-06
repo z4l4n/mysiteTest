@@ -30,6 +30,8 @@ import com.frontendart.testsuites.misc.HelpTest;
 import com.frontendart.testsuites.misc.LanguageTest;
 import com.frontendart.testsuites.misc.RedmineIssuesTest;
 import com.frontendart.testsuites.registration.RegistrationTest;
+import com.frontendart.testsuites.workflow.AuthorTest;
+import com.frontendart.testsuites.workflow.BookSeriesTest;
 
 //java -jar "selenium-server-standalone-2.53.0.jar" -Dwebdriver.firefox.bin="/home/zalan/ff46/firefox/firefox"
 @RunWith(Categories.class)
@@ -57,13 +59,14 @@ import com.frontendart.testsuites.registration.RegistrationTest;
         FilterTest.class, // FF, CHR OK ALL_ROLES
         LockRecordTest.class,
         SortTest.class, // TODO TUDOMÁNYOS FOKOZAT RENDEZÉS BUG, testSortBySelectingHeader bugot talál sztem
-
+        AuthorTest.class,
         ToolbarTest.class, // FF, CHR ALL ROLES OK EXCEPT THESE ->|  testToolbarCitationsButton pl Forum rekordtípusnál bugot talál sztem (már nem..)
         ViewVersionsTest.class, // Ok, viszont failel, elvileg verziók gomb mindenhol kéne legyen..
         HelpTest.class, //CENTRAL ADMIN ONLY, FF, CHROME OK
         LanguageTest.class, // FF, CHROME OK ALL ROLES
         RedmineIssuesTest.class, // Ticket teszt offolva (db írás miatt), ASSUME_ROLE: CENTRAL ADMIN, FF-CHROME OK
-        RegistrationTest.class, })// FF, CHROME OK
+        RegistrationTest.class,
+        BookSeriesTest.class })// FF, CHROME OK
 @IncludeCategory(CoreSuite.class)
 /**
  * Test suite for core tests

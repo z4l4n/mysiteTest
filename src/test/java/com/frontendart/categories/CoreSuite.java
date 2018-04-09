@@ -35,38 +35,33 @@ import com.frontendart.testsuites.workflow.BookSeriesTest;
 
 //java -jar "selenium-server-standalone-2.53.0.jar" -Dwebdriver.firefox.bin="/home/zalan/ff46/firefox/firefox"
 @RunWith(Categories.class)
-@SuiteClasses({ Gui2BasicTest.class, // ASSUME_ROLE: CENTRAL ADMIN | CHROME, FF OK
-        Gui2LeftPanelLabelTest.class, // ASSUME_ROLE: CENTRAL ADMIN | FF, CHROME OK
-        Gui2PublicationTest.class, // ASSUME_ROLE: CENTRAL ADMIN
-        Gui2SearchTest.class, // ASSUME_ROLE: CENTRAL ADMIN | FF, CHROME OK
-        Gui2Test.class, // ASSUME_ROLE: CENTRAL ADMIN | FF, CHROME OK
-        LoginTest.class, // FIREFOX OK: CENTRAL ADMIN, többi nem kell elvileg (?) | CHROME OK: CENTRAL
-        // ADMIN
-        ForgotPasswordTest.class, // FIREFOX OK: CENTRAL ADMIN, AUTHOR, INSTITUTIONAL ADMIN | CHROME OK: CENTRAL
-        // ADMIN, AUTHOR, INSTITUTIONAL ADMIN
-        LogoutTest.class, // FIREFOX OK: CENTRAL ADMIN, INSTITUTIONAL ADMIN, AUTHOR | CHROME OK: CENTRAL
-        // ADMIN, AUTHOR, INSTITUTIONAL ADMIN
-        GenerateReportTest.class, // FIREFOX OK: CENTRAL ADMIN, AUTHOR, INSTITUTIONAL ADMIN | CHROME OK: CENTRAL
-        // ADMIN, AUTHOR, INSTITUTIONAL ADMIN
-        RecordSelectionTest.class, // FIREFOX, CHROME OK ALL_ROLES
-        SearchTest.class, // CHROME OK: INSTITUTIONAL ADMIN, CENTRAL ADMIN, AUTHOR | FIREFOX OK: AUTHOR,
-        // CENTRAL ADMIN, INSTITUTIONAL ADMIN
-        AboutTest.class, // FIREFOX, CHROME OK ALL_ROLES
-        MessagesTest.class, // FIREFOX, CHROME OK ALL_ROLES
-        UserProfileTest.class, // FF, CHR OK ALL_ROLES
-        ChangeUserTest.class, // FF, CHR OK ALL_ROLES
-        ChangeViewTest.class, // FF, CHR OK ALL_ROLES, contains DB writing
-        FilterTest.class, // FF, CHR OK ALL_ROLES
+@SuiteClasses({ Gui2BasicTest.class,
+        Gui2LeftPanelLabelTest.class,
+        Gui2PublicationTest.class,
+        Gui2SearchTest.class,
+        Gui2Test.class,
+        LoginTest.class,
+        ForgotPasswordTest.class,
+        LogoutTest.class,
+        GenerateReportTest.class,
+        RecordSelectionTest.class,
+        SearchTest.class,
+        AboutTest.class,
+        MessagesTest.class,
+        UserProfileTest.class,
+        ChangeUserTest.class,
+        ChangeViewTest.class,
+        FilterTest.class,
         LockRecordTest.class,
         SortTest.class, // TODO TUDOMÁNYOS FOKOZAT RENDEZÉS BUG, testSortBySelectingHeader bugot talál sztem
         AuthorTest.class,
         ToolbarTest.class, // FF, CHR ALL ROLES OK EXCEPT THESE ->|  testToolbarCitationsButton pl Forum rekordtípusnál bugot talál sztem (már nem..)
         ViewVersionsTest.class, // Ok, viszont failel, elvileg verziók gomb mindenhol kéne legyen..
-        HelpTest.class, //CENTRAL ADMIN ONLY, FF, CHROME OK
-        LanguageTest.class, // FF, CHROME OK ALL ROLES
-        RedmineIssuesTest.class, // Ticket teszt offolva (db írás miatt), ASSUME_ROLE: CENTRAL ADMIN, FF-CHROME OK
+        HelpTest.class,
+        LanguageTest.class,
+        RedmineIssuesTest.class, // Ticket teszt offolva (db írás miatt)
         RegistrationTest.class,
-        BookSeriesTest.class })// FF, CHROME OK
+        BookSeriesTest.class })
 @IncludeCategory(CoreSuite.class)
 /**
  * Test suite for core tests

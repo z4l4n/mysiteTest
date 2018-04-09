@@ -6,6 +6,10 @@ import static org.junit.Assert.fail;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
@@ -67,7 +71,7 @@ public class GenerateReportManager {
      * @param reportPanel
      */
     public static void clickOnGenerateReportButton() {
-        Utils.waitForAndClickOnGeneralWebElement(GenerateReportLocators.GENERATE_REPORT_BUTTON);
+        Utils.waitForAndClickOnGeneralWebElement(GenerateReportLocators.START_GENERATING_BUTTON);
     }
 
     /**
@@ -83,7 +87,7 @@ public class GenerateReportManager {
      * Selects first option from report template
      */
     public static void selectOptionFromReportTemplate() {
-        LOGGER.info("Kattintsunk a Riport sablon/Report template legördülő menübe és válasszuk az első opciót.");
+        LOGGER.info("Kattintsunk a Riport sablon/Report template legördülő menübe és válasszuk a harmadik opciót.");
         final WebElement reportTemplateField = Utils.createGeneralWebElementFromEnum(GenerateReportLocators.REPORT_TEMPLATE_INPUT);
         reportTemplateField.sendKeys(Keys.DOWN);
         reportTemplateField.sendKeys(Keys.DOWN);
@@ -114,6 +118,19 @@ public class GenerateReportManager {
         savedSearchInput.sendKeys(Keys.ENTER);
     }
 
+    private static void clickOnGetURLOfThisReport(String name) {
+        final WebElement myReport = findThisReport(name);
+
+        // Click on toggle and select delete
+        LOGGER.info(
+                "Kattintsunk a(z) " + name + " nevű riport első oszlopában lévő legördülő ikonra és válasszuk az 'URL lekérése' opciót.");
+        final WebElement splitButton = myReport.findElement(By.xpath(GenerateReportLocators.REPORT_TOGGLE.toString()));
+        splitButton.sendKeys(Keys.DOWN);
+        Utils.defaultWait();
+        Utils.switchToActiveElement().findElement(By.xpath(GenerateReportLocators.GET_URL.toString())).click();
+        Utils.defaultWait();
+    }
+
     /**
      * Selects PDF option from file type TODO: randomize...
      */
@@ -130,6 +147,24 @@ public class GenerateReportManager {
         }
 
         fileTypeInput.sendKeys(Keys.ENTER);
+    }
+
+    public static void verifyURLOfThisReport(String reportName) {
+        clickOnGetURLOfThisReport(reportName);
+        String url = Utils.createGeneralWebElementFromEnum(GenerateReportLocators.REPORT_URL_LINK).getText();
+        System.out.println("url: " + url);
+        HttpClient client = HttpClientBuilder.create().build();
+        HttpGet request = new HttpGet(url);
+        try {
+            HttpResponse response = client.execute(request);
+            System.out.println(response.getStatusLine().getStatusCode());
+            Utils.myAssertTrue("The given url's response code should be equal to 200!", response.getStatusLine().getStatusCode() == 200);
+            System.out.println(response.getStatusLine().getStatusCode());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Utils.acceptMessageBoxIfVisible();
+
     }
 
     /**
@@ -149,14 +184,15 @@ public class GenerateReportManager {
      *
      */
     public static List<String> getMyReportNamesAsString() {
-        final List<String> myReportNames = new ArrayList<>();
+        final List<WebElement> reports = Utils.createGeneralWebElementsFromEnum(GenerateReportLocators.REPORT_NAMES);
 
-        for (final WebElement myReport : getMyReportsAsWebElement()) {
-            final String name = myReport.findElement(By.xpath(GenerateReportLocators.REPORT_NAME.toString())).getText();
-            myReportNames.add(name);
+        List<String> res = new ArrayList<>();
+        for (final WebElement myReport : reports) {
+
+            res.add(myReport.getText());
         }
 
-        return myReportNames;
+        return res;
     }
 
     /**
@@ -170,6 +206,7 @@ public class GenerateReportManager {
         LOGGER.info("Kattintsunk a(z) " + reportName + " nevű riport első oszlopában lévő legördülő ikonra és válasszuk a Törlés opciót.");
         final WebElement splitButton = myReport.findElement(By.xpath(GenerateReportLocators.REPORT_TOGGLE.toString()));
         splitButton.sendKeys(Keys.DOWN);
+        Utils.defaultWait();
         Utils.switchToActiveElement().findElement(By.xpath(GenerateReportLocators.DELETE.toString())).click();
         Utils.defaultWait();
 
@@ -235,11 +272,14 @@ public class GenerateReportManager {
 
         // Add name
         final String reportName = addRandomNameForReport();
-
+        Utils.defaultWait();
         // Select template, saved search, file type, list
         selectOptionFromReportTemplate();
+        Utils.defaultWait();
         selectRandomOptionFromFileType();
+        Utils.defaultWait();
         selectOptionFromList();
+        Utils.defaultWait();
 
         // Click on generate riport button, and wait
         try {
@@ -250,11 +290,13 @@ public class GenerateReportManager {
         }
 
         Utils.isMessageBoxVisible();
+
         assertTrue("Egy üzenetnek kell tájékoztatnia a riport generálás kezdetéről!",
                 Utils.isMessageBoxPresentWithText(GenerateReportLocators.REPORT_GENERATION_STARTED_MESSAGEBOX_TEXT));
 
         // TODO: This should be done in another way - wait until the report is ready...
-        Utils.waitMillisec(180000);
+        Utils.waitMillisec(15000);
+
         Utils.acceptMessageBoxIfVisible();
         Utils.waitForAndClickOnGeneralWebElement(GenerateReportLocators.REFRESH_BUTTON);
         Utils.acceptMessageBoxIfVisible();
@@ -275,11 +317,13 @@ public class GenerateReportManager {
     public static void checkIfReportListContainsThisString(String filterEx) {
         filterEx = filterEx.toLowerCase();
         List<WebElement> reports = Utils.createGeneralWebElementsFromEnum(GenerateReportLocators.REPORT_TABLE_TEXT);
+        System.out.println(reports.size());
         boolean allContain = true;
         for (WebElement e : reports) {
+            System.out.println(e.getText());
             if (!e.getText().toLowerCase().contains(filterEx)) {
                 allContain = false;
-                break;
+                //break;
             }
         }
         Utils.myAssertTrue("The report list doesn't contain the filtered expression!", allContain);

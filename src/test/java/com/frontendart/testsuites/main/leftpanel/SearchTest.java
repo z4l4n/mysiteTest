@@ -955,18 +955,11 @@ public class SearchTest extends JunitTestClass {
      * TODO: reimplement
      */
 
-    /**
-     * test query advanced options Redmine issue number: <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1589">#1589</a> Redmine
-     * issue number: <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1612">#1612</a>
-     *
-     * TODO: reimplement
-     */
+    /*
+    * TODO: reimplement
+    */
     /**
      * Runs empty query by clicking on it.
-     */
-
-    /**
-     * test not exact match TODO: Redmine issue number: <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1292">#1292</a>
      */
 
 }

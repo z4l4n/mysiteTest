@@ -8,6 +8,7 @@ import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
@@ -116,108 +117,40 @@ public class GenerateReportTest extends JunitTestClass {
     }
 
     @Test
-    public void testGeneratingReport() {
+    @Category(CoreSuite.class)
+    public void testGeneratingAndDeletingAReport() {
+        Utils.writeMyRedmineIssues("#1272, #1538");
+
         RecordSelectionManager.selectThisRecordTypeFromSelector(GeneralRecordTypes.PUBLICATION);
         Utils.defaultWait();
-        GenerateReportManager.expandReportPanel();
+
+        String name = GenerateReportManager.createRandomReport();
         Utils.defaultWait();
-        GenerateReportManager.createRandomReport();
+        List<String> ll = GenerateReportManager.getMyReportNamesAsString();
+
+        Utils.myAssertTrue("The report list should contain the report named " + name,
+                GenerateReportManager.getMyReportNamesAsString().contains(name));
+        Utils.defaultWait();
+        GenerateReportManager.deleteThisReport(name);
 
     }
 
-    /**
-     * Reimplement Generates simple report Redmine issue number: <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1237">#1237</a>
-     * Redmine issue number: <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1238">#1238</a> Redmine issue number:
-     * <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1270">#1270</a> Redmine issue number:
-     * <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1272">#1272</a> Redmine issue number:
-     * <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1538">#1538</a>
-     *
-     */
-    /*
-
     @Test
-    public final void testGenerateSimpleRandomReport() {
-    	Utils.writeMyRedmineIssues("#1237#1238#1270#1272#1538");
+    @Ignore
+    public void testReportURL() {
+        RecordSelectionManager.selectThisRecordTypeFromSelector(GeneralRecordTypes.PUBLICATION);
+        Utils.defaultWait();
 
-    	// Get report number
-    	final int reportNumberBeforeCreation = GenerateReportManager.getNumberOfReports();
+        String name = GenerateReportManager.createRandomReport();
+        Utils.defaultWait();
 
-    	// Create report and wait
-    	final String myNewReportName = GenerateReportManager.createRandomReport();
+        Utils.myAssertTrue("The report list should contain the report named " + name,
+                GenerateReportManager.getMyReportNamesAsString().contains(name));
+        Utils.defaultWait();
+        GenerateReportManager.verifyURLOfThisReport(name);
+        Utils.defaultWait();
 
-    	// Validate report number
-    	final int reportNumberAfterCreation = GenerateReportManager.getNumberOfReports();
-    	Utils.myAssertEquals("A riportokat tartalmazó táblázatban egy riporttal többnek kell lennie.",
-    			reportNumberBeforeCreation + 1, reportNumberAfterCreation);
-    	Utils.myAssertTrue("A riportokat tartalmazó táblázatban szerepelnie kell egy " + myNewReportName + " nevű riportnak.",
-    			GenerateReportManager.getMyReportNamesAsString().contains(myNewReportName));
+        GenerateReportManager.deleteThisReport(name);
+    }
 
-    	// Delete report
-    	GenerateReportManager.deleteThisReport(myNewReportName);
-    }*/
-
-    /**
-     * Reimplement: Wait for the popup window... Delete a report
-     */
-    /*@Test
-    public final void testDeleteReport() {
-    	// Create report and wait
-    	final String myNewReportName = GenerateReportManager.createRandomReport();
-
-    	// Get report number
-    	final int reportNumberBeforeDeletion = GenerateReportManager.getNumberOfReports();
-
-    	// Delete report
-    	GenerateReportManager.deleteThisReport(myNewReportName);
-
-    	// Validate report number
-    	final int reportNumberAfterDeletion = GenerateReportManager.getNumberOfReports();
-    	Utils.myAssertEquals("A riportokat tartalmazó táblázatban egy riporttal kevesebbnek kell lennie.",
-    			reportNumberBeforeDeletion - 1, reportNumberAfterDeletion);
-    	Utils.myAssertFalse("A riportokat tartalmazó táblázatban nem szabad szerepelnie egy " + myNewReportName + " nevű riportnak.",
-    			GenerateReportManager.getMyReportNamesAsString().contains(myNewReportName));
-    }*/
-
-    /**
-     * Reimplement Get report URL
-     */
-    /*@Test
-    public final void testOpenReportURL() {
-    	// Create report and wait
-    	final String myNewReportName = GenerateReportManager.createRandomReport();
-
-    	// get URL
-    	final String reportUrlName = GenerateReportManager.getUrlOfThisReport(myNewReportName);
-    	Utils.acceptMessageBoxIfVisible();
-    	GenerateReportManager.openUrlOfThisReport(myNewReportName);
-
-    	// Switch to new window
-    	final String winHandleBefore = driver.getWindowHandle();
-    	for (final String winHandle : driver.getWindowHandles()) {
-    		driver.switchTo().window(winHandle);
-    		Utils.defaultWait();
-    	}
-
-    	// Get Url, and check
-    	final String currentUrl = driver.getCurrentUrl();
-    	Utils.myAssertEquals("The current Url should equal with the report Url on the message box!", reportUrlName, currentUrl);
-
-    	// Close and switch back to original window
-    	driver.close();
-    	driver.switchTo().window(winHandleBefore);
-
-    	// Cleanup
-    	Utils.acceptMessageBoxIfVisible();
-    	GenerateReportManager.deleteThisReport(myNewReportName);
-    }*/
-
-    // FURTHER TEST TO BE IMPLEMENTED
-
-    /**
-     * Download a report
-     */
-
-    /**
-     * Filter report panel
-     */
 }

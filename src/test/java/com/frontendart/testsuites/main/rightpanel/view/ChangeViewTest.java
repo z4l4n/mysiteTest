@@ -34,10 +34,10 @@ public class ChangeViewTest extends SelectRandomRecordTypeJunitTestClass {
     	public final void testPageAfterSelectingIconView() {
     		// Click on icon view
     		ChangeViewManager.switchToIconView();
-
+    
     		// Validate icon view is visible
     		Utils.myAssertTrue("Az ikon nézetnek láthatónak kell lennie.", Utils.isThisElementVisible(MainPageLocators.CONTENT_ICON_GRID_PANEL));
-
+    
     		// TODO: more validation
     	}
     */
@@ -48,22 +48,22 @@ public class ChangeViewTest extends SelectRandomRecordTypeJunitTestClass {
     public final void testAfterSelectingListGridView() {
     	final WebElement selectedRow = RecordSelectionManager.selectRandomRenderedRowsFromGridPanel(1).get(0);
     	final String idOfRow = Integer.toString(GeneralTableManager.getIDOfThisRow(selectedRow));
-
+    
     	// Validate
     	ChangeViewManager.switchToListGridView();
     	Utils.myAssertTrue("A széles nézetnek láthatónak kell lennie, és annak az elemnek kell kijelölve lennie, amelyiket "
     			+ "a táblázatos nézetben kiválasztottuk.", Utils.isThisElementVisible(MainPageLocators.CONTENT_LIST_GRID_PANEL));
-
+    
     	// There should be one item selected, we get that
     	final WebElement selectedItem = RecordSelectionManager.getSelectedItemsInView().get(0);
-
+    
     	// Get value of selected element
     	final String valueOfSelectedElement = selectedItem.findElement(By.xpath("./tbody/tr/td[2]/div")).getText();
-
+    
     	// Validate
     	Utils.myAssertTrue("A széles nézetben lévő kijelölt elem adatainak meg kell jelennie a táblázatos nézet "
     			+ "megfelelő sorában lévő értékeknél.", valueOfSelectedElement.contains(idOfRow));
-
+    
     }*/
 
     /**
@@ -96,37 +96,5 @@ public class ChangeViewTest extends SelectRandomRecordTypeJunitTestClass {
         assertTrue("Table view is not visible.", Utils.myAssertTrue("A listás nézetnek láthatónak kell lennie.",
                 Utils.isThisElementVisible(MainPageLocators.CONTENT_LIST_GRID_PANEL)));
     }
-
-    /**
-     * Icon view check after select all and deselect all Redmine issue number:
-     * <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1535">#1535</a>
-     */
-    /* No icon view
-     * 	@Test
-    	@Category(CoreSuite.class)
-    	public final void testIconViewWithDeselectAllButton() {
-    		Utils.writeMyRedmineIssues("#1535");
-
-    		// Click on icon view
-    		ChangeViewManager.switchToIconView();
-
-    		// Click on select all, then on deselect all button
-    		Utils.waitForAndClickOnGeneralWebElement(ToolbarLocators.SELECT_ALL_BUTTON);
-    		Utils.waitForAndClickOnGeneralWebElement(ToolbarLocators.DESELECT_ALL_BUTTON);
-
-    		// Validate - check rows in grid view
-    		final List<WebElement> myElementsPanel = Utils.createGeneralWebElementsFromEnum(MainPageLocators.CONTENT_ICON_GRID_PANEL_ALL_ELEMENTS);
-    		for (int index = 0; index < myElementsPanel.size(); index++) {
-    			final String rowClassAttribute = myElementsPanel.get(index).getAttribute("class");
-    			assertFalse("This row should not be selected!", rowClassAttribute.contains("selected"));
-    		}
-    	}
-    */
-    // FURTHER TESTS TO BE ImPLEMENTED
-
-    /**
-     * Simple view change (change views) Redmine issue number: <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1285">#1285</a>
-     * Redmine issue number: <a href="https://redmine.mt2.dsd.sztaki.hu:18018/issues/1344">#1344</a>
-     */
 
 }

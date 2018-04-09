@@ -14,6 +14,7 @@ import com.frontendart.locators.general.GeneralPageLocators;
  */
 public enum GenerateReportLocators implements GeneralLocatorTypes {
     // Refresh button
+    REPORT_PANEL("//div[starts-with(@id, 'reportingpanel') and contains(@class, 'x-panel-bodyWrap')]"),
     LEFT_PANEL("//div[starts-with(@id, 'leftpanel')][starts-with(@class, 'x-panel ')]"),
     REFRESH_BUTTON(
             LEFT_PANEL + "//a[@data-qtip='Bal oldali táblázatok frissítése' or "
@@ -26,9 +27,9 @@ public enum GenerateReportLocators implements GeneralLocatorTypes {
     REPORTINGPANEL(PANELS + "/div/div[5]"),
 
     EXPAND_BUTTON(REPORTINGPANEL + "//div[contains(@class, 'x-tool-img')]", Arrays.asList("Kinyitás-Összecsukás", "Expand-Collapse")),
-    NEW_REPORT_BUTTON(REPORTINGPANEL + "//*/a[@data-qtip='Hozzáadás' or @data-qtip='Add']", Arrays.asList("Új riport", "New report")),
+    //NEW_REPORT_BUTTON(REPORTINGPANEL + "//*/a[@data-qtip='Hozzáadás' or @data-qtip='Add']", Arrays.asList("Új riport", "New report")),
     REPORTS_TABLE(REPORTINGPANEL + "//div[starts-with(@id, 'tableview')]"),
-
+    NEW_REPORT_BUTTON(REPORT_PANEL + "//text()[contains(.,'+')]/ancestor::*[self::a][1]", Arrays.asList("Új riport", "New report")),
     // FILTERING
     FILTER_FIELD(REPORTINGPANEL + "/div[2]/div[2]/div[1]/div//input"),
 
@@ -40,12 +41,12 @@ public enum GenerateReportLocators implements GeneralLocatorTypes {
     CLEAR_FILTERING_BUTTON(REPORTINGPANEL + "//div[contains(@id, 'trigger-clear')]", Arrays.asList("Szűkítés törlése", "Clear filter")),
 
     // Reports queries table
-    ALL_REPORTS(REPORTS_TABLE + "//*/table"),
-    REPORT_TOGGLE("./tbody/tr/td/div/a"),
-    REPORT_NAME("./tbody/tr/td[2]/div"),
+    ALL_REPORTS(REPORT_PANEL + "//table"),
+    REPORT_TOGGLE(ALL_REPORTS + "/tbody/tr/td/div/a"),
+    REPORT_NAMES(ALL_REPORTS + "/tbody/tr/td[2]/div"),
 
     REPORT_TABLE_TEXT(
-            "/html/body/div[1]/div/div/div[2]/div/div/div/div/div[3]/div/div/div/div/div[5]/div[2]/div[2]/div/div/div[3]/div[1]/div[1]/table/tbody/tr/td[2]/div"),
+            REPORT_PANEL + "//div[contains(@class, 'x-grid-item-container')]//tr/td[2]/div"),
 
     // Toggle options
     GET_URL("./../../div[2]"),
@@ -56,6 +57,8 @@ public enum GenerateReportLocators implements GeneralLocatorTypes {
     MESSAGE_BOX_URL(GeneralPageLocators.MESSAGE_BOX_MESSAGE.toString() + "/a"),
 
     // Report generation window
+    NEW_REPORT_GENERATION_WINDOW(
+            "//text()[contains(.,'Riport generálása') or contains(., 'Generate Report')]/ancestor::*[self::div[contains(@class, 'x-window') and contains(@role, 'dialog')]][1]"),
     REPORT_GENERATION_WINDOW("//div[starts-with(@id, 'window-')][starts-with(@class, 'x-window ')]"),
     REPORT_GENERATION_WINDOW_HEADER(
             REPORT_GENERATION_WINDOW + "//*/div[starts-with(@data-ref, 'textEl')]",
@@ -66,17 +69,34 @@ public enum GenerateReportLocators implements GeneralLocatorTypes {
     REPORT_GENERATION_WINDOW_CLOSE_BUTTON(
             REPORT_GENERATION_WINDOW + "//div[contains(@class, 'x-tool-img')]",
             Arrays.asList("Bezárás", "Close")),
-
+    NAME_BOX(
+            NEW_REPORT_GENERATION_WINDOW
+                    + "//text()[contains(.,'Riport név:') or contains(., 'Report name:')]/ancestor::*[self::div][1]"),
+    TEMPLATE_BOX(
+            NEW_REPORT_GENERATION_WINDOW
+                    + "//text()[contains(.,'Riport sablon:') or contains(., 'Report Template:')]/ancestor::*[self::div][1]"),
+    FILE_TYPE_BOX(
+            NEW_REPORT_GENERATION_WINDOW
+                    + "//text()[contains(.,'Fájl formátum:') or contains(., 'File Type:')]/ancestor::*[self::div][1]"),
+    LIST_BOX(
+            NEW_REPORT_GENERATION_WINDOW
+                    + "//text()[contains(.,'Lista:') or contains(., 'List:')]/ancestor::*[self::div][1]"),
     //div[starts-with(@id, 'reporteditor') and ends-with(@id, 'innerCt')]/div[1]//input
     // Name, template, saved search, file type - input fields
     NAME_INPUT(
-            REPORT_GENERATION_WINDOW + "//div[starts-with(@id, 'reporteditor') and ends-with(@id, 'innerCt')]/div[1]//input",
+            NAME_BOX + "//input",
             Arrays.asList("Riport név", "Report name")),
+    REPORT_TEMPLATE_INPUT(TEMPLATE_BOX + "//input", Arrays.asList("Riport sablon", "Report template")),
+
+    START_GENERATING_BUTTON(
+            NEW_REPORT_GENERATION_WINDOW + "//text()[contains(.,'Start') or contains(., 'Indítás')]/ancestor::*[self::a][1]",
+            Arrays.asList("Start", "Start")),
+
     // NAME_INPUT("(" + REPORT_EDITOR_PANEL + "//*/input)[1]", Arrays.asList("Riport név", "Report name")),
-    REPORT_TEMPLATE_INPUT("(" + REPORT_EDITOR_PANEL + "//*/input)[2]", Arrays.asList("Riport sablon", "Report template")),
+    // REPORT_TEMPLATE_INPUT("(" + REPORT_EDITOR_PANEL + "//*/input)[2]", Arrays.asList("Riport sablon", "Report template")),
     SAVED_SEARCH_INPUT("(" + REPORT_EDITOR_PANEL + "//*/input)[3]", Arrays.asList("Mentett keresés", "Saved search")),
-    FILE_TYPE_INPUT("(" + REPORT_EDITOR_PANEL + "//*/input)[3]", Arrays.asList("Fájl formátum", "File type")),
-    LIST_INPUT("(" + REPORT_EDITOR_PANEL + "//*/input)[5]", Arrays.asList("Lista", "List")),
+    FILE_TYPE_INPUT(FILE_TYPE_BOX + "//input", Arrays.asList("Fájl formátum", "File type")),
+    LIST_INPUT(LIST_BOX + "//input", Arrays.asList("Lista", "List")),
 
     // Generate report button
     GENERATE_REPORT_BUTTON(REPORT_EDITOR_PANEL + "//*/a", Arrays.asList("Riport generálás", "Generate Report")),
@@ -85,8 +105,13 @@ public enum GenerateReportLocators implements GeneralLocatorTypes {
     REPORT_TEMPLATE_IS_NOT_AVAILABLE(
             "",
             Arrays.asList("A riport generáláshoz szükséges sablon hiányzik.", "Missing report template for report generation.")),
-    REPORT_GENERATION_STARTED_MESSAGEBOX_TEXT("", Arrays.asList("A riport hamarosan elérhető lesz.", "")),
-    REPORT_IS_READY_MESSAGEBOX_TEXT("", Arrays.asList("A riport most elérhető a riportok táblázatban.", ""));
+    REPORT_GENERATION_STARTED_MESSAGEBOX_TEXT(
+            "",
+            Arrays.asList("A riport hamarosan elérhető lesz.", "The generated report will be available shortly.")),
+    REPORT_IS_READY_MESSAGEBOX_TEXT("", Arrays.asList("A riport most elérhető a riportok táblázatban.", "")),
+    REPORT_URL_WINDOW(
+            "//text()[contains(.,'URL a riporthoz') or contains(., 'URL to the report')]/ancestor::*[self::div[starts-with(@id, 'messagebox') and contains(@role, 'alertdialog')]][1]"),
+    REPORT_URL_LINK(REPORT_URL_WINDOW + "//a[starts-with(@href, 'https')]");
 
     private final String locator;
     List<String>         names;

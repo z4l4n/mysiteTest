@@ -33,7 +33,10 @@ public enum SortLocators implements GeneralLocatorTypes {
 
     // SORTER_MENU
     SORTER_MENU("//*/div[starts-with(@id, 'menu')][starts-with(@class, 'x-menu x-cycle-menu')][last()]"),
-    SORTER_MENU_OPTIONS(SORTER_MENU + "//*/span");
+    SORTER_MENU_OPTIONS(SORTER_MENU + "//*/span"),
+
+    GRID_TABLE_HEADER_CONTAINER("//div[starts-with(@id, 'headercontainer') and contains(@class, 'x-box-target')]"),
+    GRID_TABLE_HEADER_TEXTS(GRID_TABLE_HEADER_CONTAINER + "/div/div");
 
     private final String locator;
     List<String>         names;

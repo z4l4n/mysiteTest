@@ -1,6 +1,7 @@
 package com.frontendart.testsuites.main.rightpanel.view;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -54,9 +55,17 @@ public class SortTest extends JunitTestClass {
         Utils.defaultWait();
         ChangeViewManager.switchToGridView();
         Utils.defaultWait();
+        List<WebElement> list = Utils.createGeneralWebElementsFromEnum(SortLocators.GRID_TABLE_HEADER_TEXTS);
+
+        for (WebElement l : list) {
+            System.out.println(l.getAttribute("data-qtip"));
+        }
+
+        Utils.defaultWait();
 
         // Create sorter for this record type
         SortManager.createRandomSorterForThisRecordType(recordType);
+
     }
 
     /**
@@ -156,6 +165,7 @@ public class SortTest extends JunitTestClass {
         // Navigate to random record type
         final GeneralRecordTypes recordType = RecordSelectionManager.selectRandomRecordTypeFromSelector();
         ChangeViewManager.switchToGridView();
+        Utils.defaultWait();
 
         // Select a header and click on it
         final GeneralTableAttributes randomLocator = GeneralRecordTypes.getRandomAttribute(recordType);
